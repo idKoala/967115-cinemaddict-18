@@ -1,11 +1,11 @@
 import {createElement} from '../render.js';
 
-const createNewBoardTemplate = () =>
+const createBoardTemplate = () =>
   '<section class="films"></section>';
 
-export default class NewBoard {
+export default class BoardView {
   getTemplate () {
-    return createNewBoardTemplate();
+    return createBoardTemplate();
   }
 
   getElement () {

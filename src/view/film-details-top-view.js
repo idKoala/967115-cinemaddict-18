@@ -1,13 +1,11 @@
 import {createElement} from '../render.js';
 
-const createFilmsCounterTemplate = () =>
-  `<section class="footer__statistics">
-    <p>130 291 movies inside</p>
-  </section>`;
+const createFilmDetailsTopTemplate = () => `
+<div class="film-details__top-container"></div>`;
 
-export default class FilmsCounterView {
+export default class FilmDetailsTopView {
   getTemplate () {
-    return createFilmsCounterTemplate();
+    return createFilmDetailsTopTemplate();
   }
 
   getElement () {

@@ -6,7 +6,7 @@ const createUserRatingTemplate = () =>
     <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
 </section>`;
 
-export default class UserRating {
+export default class UserRatingView {
   getTemplate () {
     return createUserRatingTemplate();
   }

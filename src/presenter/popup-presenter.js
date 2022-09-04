@@ -7,6 +7,7 @@ import FilmDetailsCloseButtonView from '../view/film-details-close-button-view.j
 import FilmDetailsInfoView from '../view/film-details-info-view.js';
 import FilmDetailsControlsView from '../view/film-details-controls-view.js';
 import FilmDetailsCommentsView from '../view/film-details-comments-view.js';
+import FilmDetailsCommentView from '../view/film-details-comment.js';
 import FilmDetailsCommentsListView from '../view/film-details-comments-list-view.js';
 import FilmDetailsNewCommentView from '../view/film-details-new-comment-view.js';
 
@@ -16,9 +17,15 @@ export default class PopupPresenter {
   filmDetailsTopComponent = new FilmDetailsTopView();
   filmDetailsBottomComponent = new FilmDetailsBottomView();
   filmDetailsCommentsComponent = new FilmDetailsCommentsView();
+  filmDetailsCommentsListComponent = new FilmDetailsCommentsListView();
 
-  init (popupContainer) {
+  init (popupContainer, moviesModel, commentsModel) {
     this.popupContainer = popupContainer;
+    this.moviesModel = moviesModel;
+    this.movies = [...this.moviesModel.getMovies()];
+    this.popupMovie = this.movies[0];
+    this.commentsModel = commentsModel;
+    this.comments = [...this.commentsModel.getComments()];
 
     render(this.popupComponent, this.popupContainer, RenderPosition.AFTEREND);
     render(this.filmDetailsInnerComponent, this.popupComponent.getElement());
@@ -26,11 +33,15 @@ export default class PopupPresenter {
     render(this.filmDetailsBottomComponent, this.filmDetailsInnerComponent.getElement());
 
     render(new FilmDetailsCloseButtonView(), this.filmDetailsTopComponent.getElement());
-    render(new FilmDetailsInfoView(), this.filmDetailsTopComponent.getElement());
+    render(new FilmDetailsInfoView(this.popupMovie), this.filmDetailsTopComponent.getElement());
     render(new FilmDetailsControlsView(), this.filmDetailsTopComponent.getElement());
 
     render(this.filmDetailsCommentsComponent, this.filmDetailsBottomComponent.getElement());
-    render(new FilmDetailsCommentsListView(), this.filmDetailsBottomComponent.getElement());
+    render(this.filmDetailsCommentsListComponent, this.filmDetailsBottomComponent.getElement());
+    for (let i = 0; i < this.comments.length; i++) {
+      render(new FilmDetailsCommentView(this.comments[i]), this.filmDetailsCommentsListComponent.getElement());
+    }
+
     render(new FilmDetailsNewCommentView(), this.filmDetailsBottomComponent.getElement());
   }
 }

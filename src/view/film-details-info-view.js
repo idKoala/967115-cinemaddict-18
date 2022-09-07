@@ -2,7 +2,7 @@ import {createElement} from '../render.js';
 import {getDayMonthYearFromDate, convertMinutesToHoursMinutes} from '../utils.js';
 
 const createFilmDetailsInfoTemplate = (movie) =>
-{ const {title, total_rating, poster, director, writers, actors, release, runtime, genre, description} = movie.film_info;
+{ const {title, totalRating, poster, director, writers, actors, release, runtime, genre, description} = movie.film_info;
 
   return `<div class="film-details__info-wrap">
         <div class="film-details__poster">
@@ -19,7 +19,7 @@ const createFilmDetailsInfoTemplate = (movie) =>
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">${total_rating}</p>
+              <p class="film-details__total-rating">${totalRating}</p>
             </div>
           </div>
 

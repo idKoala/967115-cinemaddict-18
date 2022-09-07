@@ -4,7 +4,7 @@ import {getYearFromDate, convertMinutesToHoursMinutes} from '../utils.js';
 const createFilmCardTemplate = (movie) =>
 { const {
   title,
-  total_rating,
+  totalRating,
   runtime,
   genre,
   description,
@@ -15,7 +15,7 @@ const {comments} = movie;
 return `<article class="film-card">
   <a class="film-card__link">
     <h3 class="film-card__title">${title}</h3>
-    <p class="film-card__rating">${total_rating}</p>
+    <p class="film-card__rating">${totalRating}</p>
     <p class="film-card__info">
     <span class="film-card__year">${getYearFromDate(release.date)}</span>
     <span class="film-card__duration">${convertMinutesToHoursMinutes(runtime)}</span>

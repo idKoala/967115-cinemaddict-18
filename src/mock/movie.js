@@ -30,9 +30,9 @@ const generateMovie = () => ({
   'film_info': {
     'title': gerRandomArrayElement(MOVIES_TITLES),
     'alternative_title': 'Laziness Who Sold Themselves',
-    'total_rating': 3.5,
+    'totalRating': 3.5,
     'poster': gerRandomArrayElement(MOVIES_POSTERS),
-    'age_rating': 0,
+    'ageRating': 0,
     'director': 'Tom Ford',
     'writers': [
       'Takeshi Kitano'

@@ -19,11 +19,9 @@ export default class PopupPresenter {
   filmDetailsCommentsComponent = new FilmDetailsCommentsView();
   filmDetailsCommentsListComponent = new FilmDetailsCommentsListView();
 
-  init (popupContainer, moviesModel, commentsModel) {
+  init (popupContainer, popupMovie, commentsModel) {
     this.popupContainer = popupContainer;
-    this.moviesModel = moviesModel;
-    this.movies = [...this.moviesModel.getMovies()];
-    this.popupMovie = this.movies[0];
+    this.popupMovie = popupMovie;
     this.commentsModel = commentsModel;
     this.comments = [...this.commentsModel.getComments()];
 

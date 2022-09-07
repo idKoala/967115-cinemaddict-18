@@ -18,7 +18,7 @@ const getRandomInteger = (a = 0, b = 1) => {
 
 const gerRandomArrayElement = (arr) => arr[getRandomInteger(0, arr.length - 1)];
 
-function getRandomSubArray (arr) {
+const getRandomSubArray = (arr) => {
   const shuffled = arr.slice();
   let swap, index, i = arr.length;
   while (i--) {

@@ -1,4 +1,8 @@
 import {getRandomInteger, gerRandomArrayElement, getRandomSubArray} from '../utils.js';
+import {TOTAL_COMMENTS} from './comment.js';
+
+const TOTAL_MOVIES = 5;
+const COMMENTS_INDEX_ARRAY = Array.from({length: TOTAL_COMMENTS}, (_value, index) => index + 1);
 
 const MOVIES_TITLES = [
   'Аватар', 'Игры разума', 'Константин'
@@ -22,11 +26,7 @@ const MOVIES_DESCRIPTION = [
   'Великовозрастный оболтус дружит с говорящим плюшевым медведем.'
 ];
 
-export const generateMovie = () => ({
-  'id': 0,
-  'comments': [
-    '001', '002'
-  ],
+const generateMovie = () => ({
   'film_info': {
     'title': gerRandomArrayElement(MOVIES_TITLES),
     'alternative_title': 'Laziness Who Sold Themselves',
@@ -57,3 +57,24 @@ export const generateMovie = () => ({
     'favorite': false
   }
 });
+
+export const generateMovies = () => {
+  return Array.from({length: TOTAL_MOVIES}, (_value, index) => {
+    const commentsFilmCount = getRandomInteger(1, COMMENTS_INDEX_ARRAY.length);
+    const commentsFilmArray = [];
+    for (let i = 0; i < commentsFilmCount; i++) {
+      const spliceElement = COMMENTS_INDEX_ARRAY.splice(getRandomInteger(0, COMMENTS_INDEX_ARRAY.length - 1), 1);
+      if (spliceElement !== undefined) {
+
+        commentsFilmArray.push(spliceElement[0]);
+      } else {break}
+
+    }
+      console.log(commentsFilmArray);
+    return {
+      id: index + 1,
+      comments: commentsFilmArray,
+      ...generateMovie()
+    }
+  });
+}

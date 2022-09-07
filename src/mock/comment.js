@@ -8,16 +8,14 @@ const generateComment = () => ({
 });
 
 
-export const generateComments = () => {
-  return Array.from(
-    {length: TOTAL_COMMENTS},
-    (_value, index) => {
-      const commentItem = generateComment();
+export const generateComments = () => Array.from(
+  {length: TOTAL_COMMENTS},
+  (_value, index) => {
+    const commentItem = generateComment();
 
-      return {
-        id: index + 1,
-        ...commentItem,
-      };
-    }
-  );
-}
+    return {
+      id: index + 1,
+      ...commentItem,
+    };
+  }
+);

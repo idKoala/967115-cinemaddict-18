@@ -31,7 +31,7 @@ const getRandomSubArray = (arr) => {
   const shuffledSet = new Set(shuffledArr);
 
   return Array.from(shuffledSet);
-}
+};
 
 export {getYearFromDate,
   convertMinutesToHoursMinutes,

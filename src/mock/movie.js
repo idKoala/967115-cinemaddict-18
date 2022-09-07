@@ -58,23 +58,20 @@ const generateMovie = () => ({
   }
 });
 
-export const generateMovies = () => {
-  return Array.from({length: TOTAL_MOVIES}, (_value, index) => {
-    const commentsFilmCount = getRandomInteger(1, COMMENTS_INDEX_ARRAY.length);
-    const commentsFilmArray = [];
-    for (let i = 0; i < commentsFilmCount; i++) {
-      const spliceElement = COMMENTS_INDEX_ARRAY.splice(getRandomInteger(0, COMMENTS_INDEX_ARRAY.length - 1), 1);
-      if (spliceElement !== undefined) {
+export const generateMovies = () => Array.from({length: TOTAL_MOVIES}, (_value, index) => {
+  const commentsFilmCount = getRandomInteger(1, COMMENTS_INDEX_ARRAY.length);
+  const commentsFilmArray = [];
+  for (let i = 0; i < commentsFilmCount; i++) {
+    const spliceElement = COMMENTS_INDEX_ARRAY.splice(getRandomInteger(0, COMMENTS_INDEX_ARRAY.length - 1), 1);
+    if (spliceElement !== undefined) {
 
-        commentsFilmArray.push(spliceElement[0]);
-      } else {break}
+      commentsFilmArray.push(spliceElement[0]);
+    } else {break;}
 
-    }
-      console.log(commentsFilmArray);
-    return {
-      id: index + 1,
-      comments: commentsFilmArray,
-      ...generateMovie()
-    }
-  });
-}
+  }
+  return {
+    id: index + 1,
+    comments: commentsFilmArray,
+    ...generateMovie()
+  };
+});

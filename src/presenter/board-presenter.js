@@ -30,9 +30,7 @@ export default class BoardPresenter {
     render(this.#filmsListContainerComponent, this.#filmsListComponent.element);
     render(new ShowMoreButtonView(), this.#filmsListComponent.element);
 
-    for(let i = 0; i < this.#movies.length; i++) {
-      this.#renderFilmCard(this.#movies[i]);
-    }
+    this.#movies.forEach((movie) => {this.#renderFilmCard(movie);});
 
   }
 
@@ -68,7 +66,8 @@ export default class BoardPresenter {
   };
 
   #hidePopup = () => {
-    if (document.querySelector('.film-details')) {document.querySelector('.film-details').remove();}
+    const popupElement = document.querySelector('.film-details');
+    if (popupElement) {popupElement.remove();}
     siteBodyElement.classList.remove('hide-overflow');
   };
 }

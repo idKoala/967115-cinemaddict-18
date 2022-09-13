@@ -11,6 +11,19 @@ const createFilmCardTemplate = (movie) =>
   poster,
   release} = movie.film_info;
 const {comments} = movie;
+const {wishlist, alreadyWatched, favorite} = movie.user_details;
+
+const wishlistClassName = wishlist
+  ? 'film-card__controls-item--active'
+  : '';
+
+const alreadyWatchedClassName = alreadyWatched
+  ? 'film-card__controls-item--active'
+  : '';
+
+const favoriteClassName = favorite
+  ? 'film-card__controls-item--active'
+  : '';
 
 return `<article class="film-card">
   <a class="film-card__link">
@@ -26,9 +39,9 @@ return `<article class="film-card">
     <span class="film-card__comments">${comments.length} comments</span>
   </a>
   <div class="film-card__controls">
-    <button class="film-card__controls-item film-card__controls-item--add-to-watchlist" type="button">Add to watchlist</button>
-    <button class="film-card__controls-item film-card__controls-item--mark-as-watched" type="button">Mark as watched</button>
-    <button class="film-card__controls-item film-card__controls-item--favorite" type="button">Mark as favorite</button>
+    <button class="film-card__controls-item film-card__controls-item--add-to-watchlist ${wishlistClassName}" type="button">Add to watchlist</button>
+    <button class="film-card__controls-item film-card__controls-item--mark-as-watched ${alreadyWatchedClassName}" type="button">Mark as watched</button>
+    <button class="film-card__controls-item film-card__controls-item--favorite ${favoriteClassName}" type="button">Mark as favorite</button>
   </div>
 </article>`;};
 

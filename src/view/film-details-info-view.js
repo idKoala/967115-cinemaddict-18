@@ -1,8 +1,18 @@
 import {createElement} from '../render.js';
 import {getDayMonthYearFromDate, convertMinutesToHoursMinutes} from '../utils.js';
 
+const createGenresTemplate = (genres) => {
+  let genresTemplate = '';
+  genres.forEach((genre) => {
+    genresTemplate += `<span class="film-details__genre">${genre}</span>`;
+  });
+
+  return genresTemplate;
+};
+
 const createFilmDetailsInfoTemplate = (movie) =>
 { const {title, totalRating, poster, director, writers, actors, release, runtime, genre, description} = movie.film_info;
+  const genresTemplate = createGenresTemplate(genre);
 
   return `<div class="film-details__info-wrap">
         <div class="film-details__poster">
@@ -49,11 +59,9 @@ const createFilmDetailsInfoTemplate = (movie) =>
               <td class="film-details__cell">${release.release_country}</td>
             </tr>
             <tr class="film-details__row">
-              <td class="film-details__term">${genre}</td>
+              <td class="film-details__term">Genre</td>
               <td class="film-details__cell">
-                <span class="film-details__genre">Drama</span>
-                <span class="film-details__genre">Film-Noir</span>
-                <span class="film-details__genre">Mystery</span></td>
+                ${genresTemplate}</td>
             </tr>
           </tbody></table>
 

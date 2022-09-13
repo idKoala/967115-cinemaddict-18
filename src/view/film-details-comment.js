@@ -1,8 +1,8 @@
 import {createElement} from '../render.js';
 import {getDateTimeFromDate} from '../utils.js';
 
-const createFilmDetailsCommentTemplate = (userCcomment) => {
-  const {author, comment, date, emotion} = userCcomment;
+const createFilmDetailsCommentTemplate = (userComment) => {
+  const {author, comment, date, emotion} = userComment;
 
   return `
     <li class="film-details__comment">

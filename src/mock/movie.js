@@ -46,15 +46,16 @@ const generateMovie = () => ({
     },
     'runtime': 77,
     'genre': [
-      'Comedy'
+      'Comedy',
+      'Drama'
     ],
     'description': getRandomSubArray(MOVIES_DESCRIPTION).join(' '),
   },
   'user_details': {
     'wishlist': false,
-    'already_watched': true,
+    'alreadyWatched': true,
     'watching_date': '2019-04-12T16:12:32.554Z',
-    'favorite': false
+    'favorite': true
   }
 });
 

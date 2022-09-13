@@ -16,7 +16,6 @@ export default class PopupPresenter {
   #filmDetailsInnerComponent = new FilmDetailsInnerView();
   #filmDetailsTopComponent = new FilmDetailsTopView();
   #filmDetailsBottomComponent = new FilmDetailsBottomView();
-  #filmDetailsCommentsComponent = new FilmDetailsCommentsView();
   #filmDetailsCommentsListComponent = new FilmDetailsCommentsListView();
   #filmDetailsCloseButtonComponent = new FilmDetailsCloseButtonView();
   #popupContainer = null;
@@ -38,13 +37,14 @@ export default class PopupPresenter {
 
     render(this.#filmDetailsCloseButtonComponent, this.#filmDetailsTopComponent.element);
     render(new FilmDetailsInfoView(this.#popupMovie), this.#filmDetailsTopComponent.element);
-    render(new FilmDetailsControlsView(), this.#filmDetailsTopComponent.element);
+    render(new FilmDetailsControlsView(popupMovie), this.#filmDetailsTopComponent.element);
 
-    render(this.#filmDetailsCommentsComponent, this.#filmDetailsBottomComponent.element);
+    render(new FilmDetailsCommentsView(popupMovie), this.#filmDetailsBottomComponent.element);
     render(this.#filmDetailsCommentsListComponent, this.#filmDetailsBottomComponent.element);
-    for (let i = 0; i < this.#comments.length; i++) {
-      render(new FilmDetailsCommentView(this.#comments[i]), this.#filmDetailsCommentsListComponent.element);
-    }
+
+    this.#comments.forEach((comment) => {
+      render(new FilmDetailsCommentView(comment), this.#filmDetailsCommentsListComponent.element);
+    });
 
     render(new FilmDetailsNewCommentView(), this.#filmDetailsBottomComponent.element);
   }

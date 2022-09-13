@@ -14,7 +14,7 @@ const profileElement = document.querySelector('.header');
 const footerElement = document.querySelector('.footer');
 
 const moviesModel = new MoviesModel();
-const movies = [...moviesModel.getMovies()];
+const movies = [...moviesModel.movies];
 const popupMovie = movies[0];
 const commentsModel = new CommentsModel();
 const boardPresenter = new BoardPresenter();
@@ -26,4 +26,4 @@ render(new SortView(), siteMainElement);
 render(new FilmsCounterView(), footerElement);
 
 boardPresenter.init(siteMainElement, moviesModel);
-popupPresenter.init(footerElement, popupMovie, commentsModel);
+//popupPresenter.init(footerElement, popupMovie, commentsModel);

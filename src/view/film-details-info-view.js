@@ -64,23 +64,26 @@ const createFilmDetailsInfoTemplate = (movie) =>
       </div>`;};
 
 export default class FilmDetailsInfoView {
+  #element = null;
+  #popupMovie = null;
+  
   constructor (popupMovie) {
-    this.popupMovie = popupMovie;
+    this.#popupMovie = popupMovie;
   }
 
-  getTemplate () {
-    return createFilmDetailsInfoTemplate(this.popupMovie);
+  get template () {
+    return createFilmDetailsInfoTemplate(this.#popupMovie);
   }
 
-  getElement () {
-    if(!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element () {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement () {
-    this.element = null;
+    this.#element = null;
   }
 }

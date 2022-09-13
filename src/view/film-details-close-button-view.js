@@ -10,7 +10,7 @@ export default class FilmDetailsCloseButtonView {
   get template () {
     return createFilmDetailsCloseButtonTemplate();
   }
-  
+
   get element () {
     if (!this.#element) {
       this.#element = createElement(this.template);

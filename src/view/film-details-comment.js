@@ -23,7 +23,7 @@ const createFilmDetailsCommentTemplate = (userCcomment) => {
 export default class FilmDetailsCommentView {
   #element = null;
   #comment = null;
-  
+
   constructor (comment) {
     this.#comment = comment;
   }

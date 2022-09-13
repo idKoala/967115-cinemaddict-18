@@ -18,6 +18,7 @@ export default class PopupPresenter {
   #filmDetailsBottomComponent = new FilmDetailsBottomView();
   #filmDetailsCommentsComponent = new FilmDetailsCommentsView();
   #filmDetailsCommentsListComponent = new FilmDetailsCommentsListView();
+  #filmDetailsCloseButtonComponent = new FilmDetailsCloseButtonView();
   #popupContainer = null;
   #popupMovie = null;
   #commentsModel = null;
@@ -35,7 +36,7 @@ export default class PopupPresenter {
     render(this.#filmDetailsTopComponent, this.#filmDetailsInnerComponent.element);
     render(this.#filmDetailsBottomComponent, this.#filmDetailsInnerComponent.element);
 
-    render(new FilmDetailsCloseButtonView(), this.#filmDetailsTopComponent.element);
+    render(this.#filmDetailsCloseButtonComponent, this.#filmDetailsTopComponent.element);
     render(new FilmDetailsInfoView(this.#popupMovie), this.#filmDetailsTopComponent.element);
     render(new FilmDetailsControlsView(), this.#filmDetailsTopComponent.element);
 

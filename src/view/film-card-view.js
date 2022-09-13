@@ -35,7 +35,7 @@ return `<article class="film-card">
 export default class FilmCardView {
   #element = null;
   #movie = null;
-  
+
   constructor (movie) {
     this.#movie = movie;
   }

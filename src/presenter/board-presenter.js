@@ -10,6 +10,7 @@ import CommentsModel from '../model/comments-model.js';
 const siteBodyElement = document.querySelector('body');
 const footerElement = document.querySelector('.footer');
 
+
 export default class BoardPresenter {
   #boardComponent = new BoardView();
   #filmsListComponent = new FilmsListView();
@@ -30,7 +31,6 @@ export default class BoardPresenter {
     render(new ShowMoreButtonView(), this.#filmsListComponent.element);
 
     for(let i = 0; i < this.#movies.length; i++) {
-      //render(new FilmCardView(this.#movies[i]), this.#filmsListContainerComponent.element);
       this.#renderFilmCard(this.#movies[i]);
     }
 
@@ -39,34 +39,36 @@ export default class BoardPresenter {
   #renderFilmCard = (movie) => {
     const filmCardComponent = new FilmCardView(movie);
 
+    const onEscKeyDown = (evt) => {
+      if (evt.key === 'Escape' || evt.key === 'Esc') {
+        evt.preventDefault();
+        this.#hidePopup();
+        document.removeEventListener('keydown', onEscKeyDown);
+      }
+    };
+
+
     filmCardComponent.element.querySelector('.film-card__link').addEventListener('click', () => {
       this.#showPopup(movie);
+      document.addEventListener('keydown', onEscKeyDown);
+      document.querySelector('.film-details__close-btn').addEventListener('click', () => {
+        this.#hidePopup();
+      });
     });
-
-    // навесить событие клика на каждую созданную карты
-    // по клику вызвать функцию showPopup с аргументом movie
 
     render(filmCardComponent, this.#filmsListContainerComponent.element);
-  }
+  };
 
   #showPopup = (movie) => {
-    console.log('click-click');
     const popupPresenter = new PopupPresenter();
     const commentsModel = new CommentsModel();
-
+    this.#hidePopup();
     popupPresenter.init(footerElement, movie, commentsModel);
-    popupPresenter.querySelector('.film-details__close-btn').addEventListener('click', () => {
-      console.log('clise-close');
-    });
-    //показать попап с фильмом -- создать попап и вставить его в разметку
-    //навесить события скрытия попапа -- по кресту и по Esc
-    //удалить событие клика по фильму
-  }
+    siteBodyElement.classList.add('hide-overflow');
+  };
 
   #hidePopup = () => {
-    //как отобразить и скрыть попап
-
-    //скрыть-удалить попап
-    //удалить события закрытия -- по кресту и 
-  }
+    if (document.querySelector('.film-details')) {document.querySelector('.film-details').remove();}
+    siteBodyElement.classList.remove('hide-overflow');
+  };
 }

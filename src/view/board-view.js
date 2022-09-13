@@ -5,11 +5,11 @@ const createBoardTemplate = () =>
 
 export default class BoardView {
   #element = null;
-  
+
   get template () {
     return createBoardTemplate();
   }
-  
+
   get element () {
     if (!this.#element) {
       this.#element = createElement(this.template);

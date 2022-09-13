@@ -66,7 +66,7 @@ const createFilmDetailsInfoTemplate = (movie) =>
 export default class FilmDetailsInfoView {
   #element = null;
   #popupMovie = null;
-  
+
   constructor (popupMovie) {
     this.#popupMovie = popupMovie;
   }

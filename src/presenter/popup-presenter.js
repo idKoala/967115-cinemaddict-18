@@ -24,9 +24,9 @@ export default class PopupPresenter {
   #comments = null;
 
 
-  init (popupContainer, popupMovie, commentsModel) {
+  init (popupContainer, movieData, commentsModel) {
     this.#popupContainer = popupContainer;
-    this.#popupMovie = popupMovie;
+    this.#popupMovie = movieData;
     this.#commentsModel = commentsModel;
     this.#comments = [...this.#commentsModel.comments];
 
@@ -37,9 +37,9 @@ export default class PopupPresenter {
 
     render(this.#filmDetailsCloseButtonComponent, this.#filmDetailsTopComponent.element);
     render(new FilmDetailsInfoView(this.#popupMovie), this.#filmDetailsTopComponent.element);
-    render(new FilmDetailsControlsView(popupMovie), this.#filmDetailsTopComponent.element);
+    render(new FilmDetailsControlsView(movieData), this.#filmDetailsTopComponent.element);
 
-    render(new FilmDetailsCommentsView(popupMovie), this.#filmDetailsBottomComponent.element);
+    render(new FilmDetailsCommentsView(movieData), this.#filmDetailsBottomComponent.element);
     render(this.#filmDetailsCommentsListComponent, this.#filmDetailsBottomComponent.element);
 
     this.#comments.forEach((comment) => {

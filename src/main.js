@@ -11,11 +11,12 @@ const profileElement = document.querySelector('.header');
 const footerElement = document.querySelector('.footer');
 
 const moviesModel = new MoviesModel();
-const boardPresenter = new BoardPresenter();
+const movies = [...moviesModel.movies];
+const boardPresenter = new BoardPresenter(siteMainElement, moviesModel);
 
 render(new MenuView(), siteMainElement);
 render(new UserRatingView(), profileElement);
 render(new SortView(), siteMainElement);
-render(new FilmsCounterView(), footerElement);
+render(new FilmsCounterView(movies), footerElement);
 
-boardPresenter.init(siteMainElement, moviesModel);
+boardPresenter.init();

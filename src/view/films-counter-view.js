@@ -1,15 +1,20 @@
 import {createElement} from '../render.js';
 
-const createFilmsCounterTemplate = () =>
+const createFilmsCounterTemplate = (movies) =>
   `<section class="footer__statistics">
-    <p>130 291 movies inside</p>
+    <p>${movies.length} movies inside</p>
   </section>`;
 
 export default class FilmsCounterView {
   #element = null;
+  #movies = null;
+
+  constructor (movies) {
+    this.#movies = movies;
+  }
 
   get template () {
-    return createFilmsCounterTemplate();
+    return createFilmsCounterTemplate(this.#movies);
   }
 
   get element () {

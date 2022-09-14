@@ -4,19 +4,21 @@ const createFilmDetailsTopTemplate = () => `
 <div class="film-details__top-container"></div>`;
 
 export default class FilmDetailsTopView {
-  getTemplate () {
+  #element = null;
+
+  get template () {
     return createFilmDetailsTopTemplate();
   }
 
-  getElement () {
-    if(!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element () {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement () {
-    this.element = null;
+    this.#element = null;
   }
 }

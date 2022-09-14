@@ -1,26 +1,49 @@
 import {createElement} from '../render.js';
 
-const createFilmDetailsControlsTemplate = () => `
+const createFilmDetailsControlsTemplate = (userDetails) => {
+  const {wishlist, alreadyWatched, favorite} = userDetails;
+
+  const wishlistClassName = wishlist
+    ? 'film-details__control-button--active'
+    : '';
+
+  const alreadyWatchedClassName = alreadyWatched
+    ? 'film-details__control-button--active'
+    : '';
+
+  const favoriteClassName = favorite
+    ? 'film-details__control-button--active'
+    : '';
+
+  return `
 <section class="film-details__controls">
-        <button type="button" class="film-details__control-button film-details__control-button--active film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
-        <button type="button" class="film-details__control-button film-details__control-button--watched" id="watched" name="watched">Already watched</button>
-        <button type="button" class="film-details__control-button film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
-      </section>`;
+        <button type="button" class="film-details__control-button film-details__control-button--watchlist ${wishlistClassName}" id="watchlist" name="watchlist">Add to watchlist</button>
+        <button type="button" class="film-details__control-button film-details__control-button--watched ${alreadyWatchedClassName}" id="watched" name="watched">Already watched</button>
+        <button type="button" class="film-details__control-button film-details__control-button--favorite ${favoriteClassName}" id="favorite" name="favorite">Add to favorites</button>
+      </section>`;};
 
 export default class FilmDetailsControlsView {
-  getTemplate () {
-    return createFilmDetailsControlsTemplate();
+  #element = null;
+  #userDetails = null;
+
+  constructor (movie) {
+    const userDetails = movie.user_details;
+    this.#userDetails = userDetails;
   }
 
-  getElement () {
-    if(!this.element) {
-      this.element = createElement(this.getTemplate());
+  get template () {
+    return createFilmDetailsControlsTemplate(this.#userDetails);
+  }
+
+  get element () {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement () {
-    this.element = null;
+    this.#element = null;
   }
 }

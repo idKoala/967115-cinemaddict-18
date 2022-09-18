@@ -1,5 +1,5 @@
-import {createElement} from '../render.js';
 import {getYearFromDate, convertMinutesToHoursMinutes} from '../utils.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 const createFilmCardTemplate = (movie) =>
 { const {
@@ -32,7 +32,7 @@ return `<article class="film-card">
     <p class="film-card__info">
     <span class="film-card__year">${getYearFromDate(release.date)}</span>
     <span class="film-card__duration">${convertMinutesToHoursMinutes(runtime)}</span>
-    <span class="film-card__genre">${genre}</span>
+    <span class="film-card__genre">${genre.join(', ')}</span>
     </p>
     <img src=${poster} alt="" class="film-card__poster">
     <p class="film-card__description">${description}</p>
@@ -45,27 +45,15 @@ return `<article class="film-card">
   </div>
 </article>`;};
 
-export default class FilmCardView {
-  #element = null;
+export default class FilmCardView extends AbstractView {
   #movie = null;
 
   constructor (movie) {
+    super();
     this.#movie = movie;
   }
 
   get template () {
     return createFilmCardTemplate(this.#movie);
-  }
-
-  get element () {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement () {
-    this.#element = null;
   }
 }

@@ -1,4 +1,4 @@
-import {render} from '../render.js';
+import {render} from '../framework/render.js';
 import BoardView from '../view/board-view.js';
 import FilmsListView from '../view/films-list-view.js';
 import FilmsListContainerView from '../view/films-list-container-view.js';
@@ -48,7 +48,7 @@ export default class BoardPresenter {
       if (this.#movies.length > MOVIES_COUNT_PER_STEP) {
         render(this.#showMoreButtonComponent, this.#filmsListComponent.element);
 
-        this.#showMoreButtonComponent.element.addEventListener('click', this.#onShowMoreButtonClick);
+        this.#showMoreButtonComponent.setOnButtonClick(this.#onShowMoreButtonClick);
       }
 
       for (let i = 0; i < Math.min(this.#movies.length, MOVIES_COUNT_PER_STEP); i++)
@@ -56,8 +56,7 @@ export default class BoardPresenter {
     }
   };
 
-  #onShowMoreButtonClick = (evt) => {
-    evt.preventDefault();
+  #onShowMoreButtonClick = () => {
     this.#movies
       .slice(this.#renderedMoviesCount, this.#renderedMoviesCount + MOVIES_COUNT_PER_STEP)
       .forEach((movie) => this.#renderFilmCard(movie));

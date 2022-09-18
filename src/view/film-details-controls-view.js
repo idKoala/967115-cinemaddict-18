@@ -1,4 +1,4 @@
-import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 const createFilmDetailsControlsTemplate = (userDetails) => {
   const {wishlist, alreadyWatched, favorite} = userDetails;
@@ -22,28 +22,16 @@ const createFilmDetailsControlsTemplate = (userDetails) => {
         <button type="button" class="film-details__control-button film-details__control-button--favorite ${favoriteClassName}" id="favorite" name="favorite">Add to favorites</button>
       </section>`;};
 
-export default class FilmDetailsControlsView {
-  #element = null;
+export default class FilmDetailsControlsView extends AbstractView {
   #userDetails = null;
 
   constructor (movie) {
+    super();
     const userDetails = movie.user_details;
     this.#userDetails = userDetails;
   }
 
   get template () {
     return createFilmDetailsControlsTemplate(this.#userDetails);
-  }
-
-  get element () {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement () {
-    this.#element = null;
   }
 }

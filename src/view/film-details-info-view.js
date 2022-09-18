@@ -1,4 +1,4 @@
-import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import {getDayMonthYearFromDate, convertMinutesToHoursMinutes} from '../utils.js';
 
 const createGenresTemplate = (genres) => {
@@ -71,27 +71,15 @@ const createFilmDetailsInfoTemplate = (movie) =>
         </div>
       </div>`;};
 
-export default class FilmDetailsInfoView {
-  #element = null;
+export default class FilmDetailsInfoView extends AbstractView {
   #popupMovie = null;
 
   constructor (popupMovie) {
+    super();
     this.#popupMovie = popupMovie;
   }
 
   get template () {
     return createFilmDetailsInfoTemplate(this.#popupMovie);
-  }
-
-  get element () {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement () {
-    this.#element = null;
   }
 }

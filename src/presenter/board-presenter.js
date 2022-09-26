@@ -8,6 +8,7 @@ import PopupPresenter from './popup-presenter.js';
 import FilmPresenter from './film-presenter.js';
 import CommentsModel from '../model/comments-model.js';
 import FilmsListTitleView from '../view/films-list-title-view.js';
+import {updateItem} from '../utils.js';
 
 const MOVIES_COUNT_PER_STEP = 5;
 
@@ -25,6 +26,7 @@ export default class BoardPresenter {
   #boardContainer = null;
   #moviesModel = null;
   #movies = null;
+  #filmPresenter = new Map();
 
   constructor (boardContainer, moviesModel) {
     this.#boardContainer = boardContainer;
@@ -85,30 +87,15 @@ export default class BoardPresenter {
     }
   };
 
+  #handleMovieChange = (updatedMovie) => {
+    this.#movies = updateItem(this.#movies, updatedMovie);
+    this.#filmPresenter.get(updatedMovie.id).init(updatedMovie);
+  }
+
   #renderFilmCard = (movie) => {
-    // const filmCardComponent = new FilmCardView(movie);
-
-    // const onEscKeyDown = (evt) => {
-    //   if (evt.key === 'Escape' || evt.key === 'Esc') {
-    //     evt.preventDefault();
-    //     this.#hidePopup();
-    //     document.removeEventListener('keydown', onEscKeyDown);
-    //   }
-    // };
-
-
-    // filmCardComponent.element.querySelector('.film-card__link').addEventListener('click', () => {
-    //   this.#showPopup(movie);
-    //   document.addEventListener('keydown', onEscKeyDown);
-    //   document.querySelector('.film-details__close-btn').addEventListener('click', () => {
-    //     this.#hidePopup();
-    //   });
-    // });
-
-    // render(filmCardComponent, this.#filmsListContainerComponent.element);
-
-    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent.element);
+    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent.element, this.#handleMovieChange);
     filmPresenter.init(movie);
+    this.#filmPresenter.set(movie.id, filmPresenter);
   };
 
   // #showPopup = (movie) => {

@@ -10,9 +10,11 @@ export default class FilmPresenter {
     #filmCardComponent = null;
     #filmsListContainerComponent = null;
     #movie = null;
+    #changeData = null;
 
-    constructor (filmsListContainerComponent) {
+    constructor (filmsListContainerComponent, changeData) {
         this.#filmsListContainerComponent = filmsListContainerComponent;
+        this.#changeData = changeData;
     }
 
     init = (movie) => {
@@ -53,21 +55,19 @@ export default class FilmPresenter {
         }
       };
 
+    destroy = () => {
+        remove(this.#filmCardComponent);
+    }
+
     #onWishListClick = () => {
-        console.log(`current wish list ${this.#movie.user_details.wishlist}`);
-        this.#movie.user_details.wishlist = !this.#movie.user_details.wishlist;
-        console.log(`new wish list ${this.#movie.user_details.wishlist}`);
+        this.#changeData({...this.#movie, user_details: {...this.#movie.user_details, wishlist: !this.#movie.user_details.wishlist}});
     }
     #onWatchedClick = () => {
-        console.log(`current watched ${this.#movie.user_details.alreadyWatched}`);
-        this.#movie.user_details.alreadyWatched = !this.#movie.user_details.alreadyWatched;
-        console.log(`new watched ${this.#movie.user_details.alreadyWatched}`);
+        this.#changeData({...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}});
     }
 
     #onFavouriteClick = () => {
-        console.log(`current favourite ${this.#movie.user_details.favorite}`);
-        this.#movie.user_details.favorite = !this.#movie.user_details.favorite;
-        console.log(`new favourite ${this.#movie.user_details.favorite}`);
+        this.#changeData({...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}});
     }
 
 

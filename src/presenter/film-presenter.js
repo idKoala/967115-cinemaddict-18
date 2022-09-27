@@ -23,7 +23,6 @@ export default class FilmPresenter {
 
     this.#filmCardComponent = new FilmCardView(movie);
 
-    // доопределить презентер на попап
     this.#filmCardComponent.element.querySelector('.film-card__link').addEventListener('click', () => {
       this.#showPopup(movie);
       document.addEventListener('keydown', this.#onEscKeyDown);

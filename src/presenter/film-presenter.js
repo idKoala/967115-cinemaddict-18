@@ -10,11 +10,11 @@ export default class FilmPresenter {
     #filmCardComponent = null;
     #filmsListContainerComponent = null;
     #movie = null;
-    #changeData = null;
+    #changeMovieData = null;
 
-    constructor (filmsListContainerComponent, changeData) {
+    constructor (filmsListContainerComponent, changeMovieData) {
         this.#filmsListContainerComponent = filmsListContainerComponent;
-        this.#changeData = changeData;
+        this.#changeMovieData = changeMovieData;
     }
 
     init = (movie) => {
@@ -60,22 +60,28 @@ export default class FilmPresenter {
     }
 
     #onWishListClick = () => {
-        this.#changeData({...this.#movie, user_details: {...this.#movie.user_details, wishlist: !this.#movie.user_details.wishlist}});
+        this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, wishlist: !this.#movie.user_details.wishlist}});
     }
     #onWatchedClick = () => {
-        this.#changeData({...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}});
+        this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}});
     }
 
     #onFavouriteClick = () => {
-        this.#changeData({...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}});
+        this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}});
     }
 
 
     #showPopup = (movie) => {
-        const popupPresenter = new PopupPresenter();
         const commentsModel = new CommentsModel();
+        const popupPresenter = new PopupPresenter(
+            footerElement, 
+            movie, 
+            commentsModel, 
+            this.#onWishListClick,
+            this.#onWatchedClick,
+            this.#onFavouriteClick);
         this.#hidePopup();
-        popupPresenter.init(footerElement, movie, commentsModel);
+        popupPresenter.init();
         siteBodyElement.classList.add('hide-overflow');
       };
     

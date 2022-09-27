@@ -34,4 +34,41 @@ export default class FilmDetailsControlsView extends AbstractView {
   get template () {
     return createFilmDetailsControlsTemplate(this.#userDetails);
   }
+
+  setOnWishListClick = (callback) => {
+    this._callback.wishListClick = callback;
+    this.element
+      .querySelector('.film-details__control-button--watchlist')
+      .addEventListener('click', this.#wishListClickHandler);
+  }
+
+  setOnWatchedClick = (callback) => {
+    this._callback.watchedClick = callback;
+    this.element
+      .querySelector('.film-details__control-button--watched')
+      .addEventListener('click', this.#watchedClickHandler);
+  }
+
+  setOnFavouriteClick = (callback) => {
+    this._callback.favoriteClick = callback;
+    this.element
+      .querySelector('.film-details__control-button--favorite')
+      .addEventListener('click', this.#favouriteClickHandler);
+  }
+
+  #wishListClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.wishListClick();
+  }
+
+  #watchedClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.watchedClick();
+  }
+
+  #favouriteClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.favoriteClick();
+  }
+
 }

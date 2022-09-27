@@ -97,18 +97,4 @@ export default class BoardPresenter {
     filmPresenter.init(movie);
     this.#filmPresenter.set(movie.id, filmPresenter);
   };
-
-  // #showPopup = (movie) => {
-  //   const popupPresenter = new PopupPresenter();
-  //   const commentsModel = new CommentsModel();
-  //   this.#hidePopup();
-  //   popupPresenter.init(footerElement, movie, commentsModel);
-  //   siteBodyElement.classList.add('hide-overflow');
-  // };
-
-  // #hidePopup = () => {
-  //   const popupElement = document.querySelector('.film-details');
-  //   if (popupElement) {popupElement.remove();}
-  //   siteBodyElement.classList.remove('hide-overflow');
-  // };
 }

@@ -29,12 +29,12 @@ export default class PopupPresenter {
 
 
   constructor (
-    popupContainer, 
-    movieData, 
-    commentsModel, 
+    popupContainer,
+    movieData,
+    commentsModel,
     onWishListClick,
     onWatchedClick,
-    onFavouriteClick) 
+    onFavouriteClick)
   {
     this.#popupContainer = popupContainer;
     this.#popupMovie = movieData;
@@ -61,42 +61,42 @@ export default class PopupPresenter {
     this.#renderFilmDetailsControls();
     this.#renderFilmDetailsComments();
     this.#renderFilmDetailsNewComment();
-    
-  }
-  
+
+  };
+
   #renderFilmDetailsCloseButton = () => {
     render(this.#filmDetailsCloseButtonComponent, this.#filmDetailsTopComponent.element);
-  }
-  
+  };
+
   #renderFilmDetailsInfo = () => {
     render(new FilmDetailsInfoView(this.#popupMovie), this.#filmDetailsTopComponent.element);
-  }
-  
+  };
+
   #renderFilmDetailsControls = () => {
     this.#filmDetailsControlsComponent = new FilmDetailsControlsView(this.#popupMovie);
     this.#filmDetailsControlsComponent.setOnWishListClick(this.#onWishListClick);
     this.#filmDetailsControlsComponent.setOnWatchedClick(this.#onWatchedClick);
     this.#filmDetailsControlsComponent.setOnFavouriteClick(this.#onFavouriteClick);
-    
+
     render(this.#filmDetailsControlsComponent, this.#filmDetailsTopComponent.element);
 
-  }
-  
+  };
+
   #renderFilmDetailsComment = (comment) => {
     render(new FilmDetailsCommentView(comment), this.#filmDetailsCommentsListComponent.element);
-  }
-  
+  };
+
   #renderFilmDetailsComments = () => {
     render(new FilmDetailsCommentsView(this.#popupMovie), this.#filmDetailsBottomComponent.element);
     render(this.#filmDetailsCommentsListComponent, this.#filmDetailsBottomComponent.element);
-    
+
     this.#comments.forEach((comment) => {
       this.#renderFilmDetailsComment(comment);
     });
-  }
-  
+  };
+
   #renderFilmDetailsNewComment = () => {
     render(new FilmDetailsNewCommentView(), this.#filmDetailsBottomComponent.element);
-  }
+  };
 }
 

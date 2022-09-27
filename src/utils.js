@@ -45,7 +45,7 @@ const updateItem = (items, update) => {
     update,
     ...items.slice(index + 1)
   ];
-}
+};
 
 export {getYearFromDate,
   convertMinutesToHoursMinutes,

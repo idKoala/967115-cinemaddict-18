@@ -57,40 +57,40 @@ export default class FilmCardView extends AbstractView {
     return createFilmCardTemplate(this.#movie);
   }
 
-  // Тут самое место для замыкания -- коллбэки по сути одинаковые  
+  // Тут самое место для замыкания -- коллбэки по сути одинаковые
   setOnWishListClick = (callback) => {
     this._callback.wishListClick = callback;
     this.element
       .querySelector('.film-card__controls-item--add-to-watchlist')
       .addEventListener('click', this.#wishListClickHandler);
-  }
+  };
 
   setOnWatchedClick = (callback) => {
     this._callback.watchedClick = callback;
     this.element
       .querySelector('.film-card__controls-item--mark-as-watched')
       .addEventListener('click', this.#watchedClickHandler);
-  }
+  };
 
   setOnFavouriteClick = (callback) => {
     this._callback.favoriteClick = callback;
     this.element
       .querySelector('.film-card__controls-item--favorite')
       .addEventListener('click', this.#favouriteClickHandler);
-  }
+  };
 
   #wishListClickHandler = (evt) => {
     evt.preventDefault();
     this._callback.wishListClick();
-  }
+  };
 
   #watchedClickHandler = (evt) => {
     evt.preventDefault();
     this._callback.watchedClick();
-  }
+  };
 
   #favouriteClickHandler = (evt) => {
     evt.preventDefault();
     this._callback.favoriteClick();
-  }
+  };
 }

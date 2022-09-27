@@ -3,18 +3,11 @@ import BoardView from '../view/board-view.js';
 import FilmsListView from '../view/films-list-view.js';
 import FilmsListContainerView from '../view/films-list-container-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
-import FilmCardView from '../view/film-card-view.js';
-import PopupPresenter from './popup-presenter.js';
 import FilmPresenter from './film-presenter.js';
-import CommentsModel from '../model/comments-model.js';
 import FilmsListTitleView from '../view/films-list-title-view.js';
 import {updateItem} from '../utils.js';
 
 const MOVIES_COUNT_PER_STEP = 5;
-
-// const siteBodyElement = document.querySelector('body');
-// const footerElement = document.querySelector('.footer');
-
 
 export default class BoardPresenter {
   #boardComponent = new BoardView();
@@ -42,7 +35,7 @@ export default class BoardPresenter {
 
   #renderFilmsListTitle = () => {
     render(this.#filmsListTitleComponent, this.#filmsListComponent.element);
-  }
+  };
 
   #renderBoard = () => {
     render(this.#boardComponent, this.#boardContainer);
@@ -62,17 +55,17 @@ export default class BoardPresenter {
     if (this.#movies.length > MOVIES_COUNT_PER_STEP) {
       this.#renderShowMoreButton();
     }
-  }
+  };
 
   #renderShowMoreButton = () => {
     render(this.#showMoreButtonComponent, this.#filmsListComponent.element);
     this.#showMoreButtonComponent.setOnButtonClick(this.#onShowMoreButtonClick);
-  }
+  };
 
   #renderFilms = () => {
     for (let i = 0; i < Math.min(this.#movies.length, MOVIES_COUNT_PER_STEP); i++)
     {this.#renderFilmCard(this.#movies[i]);}
-  }
+  };
 
   #onShowMoreButtonClick = () => {
     this.#movies
@@ -90,7 +83,7 @@ export default class BoardPresenter {
   #handleMovieChange = (updatedMovie) => {
     this.#movies = updateItem(this.#movies, updatedMovie);
     this.#filmPresenter.get(updatedMovie.id).init(updatedMovie);
-  }
+  };
 
   #renderFilmCard = (movie) => {
     const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent.element, this.#handleMovieChange);

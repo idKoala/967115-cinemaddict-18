@@ -1,16 +1,17 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
 const createEmojiImageTemplate = (emoji) => emoji === null ? '' : `<img src="images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">`;
+const createCommentTextTemplate = (text) => text === null ? '' : text;
 
 const createFilmDetailsNewCommentTemplate = (data) => {
-  const {emotion} = data;
+  const {emotion, comment} = data;
 
   return `
 <form class="film-details__new-comment" action="" method="get">
           <div class="film-details__add-emoji-label">${createEmojiImageTemplate(emotion)}</div>
 
           <label class="film-details__comment-label">
-            <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
+            <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment">${createCommentTextTemplate(comment)}</textarea>
           </label>
 
           <div class="film-details__emoji-list">
@@ -69,9 +70,9 @@ export default class FilmDetailsNewCommentView extends AbstractStatefulView{
 
   #onCommentInput = (evt) => {
     evt.preventDefault();
-    this._setState = {
+    this._setState({
       'comment': evt.target.value
-    };
+    });
   };
 
   #onFormSubmit = (evt) => {

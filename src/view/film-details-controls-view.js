@@ -30,8 +30,6 @@ export default class FilmDetailsControlsView extends AbstractStatefulView {
     // const userDetails = movie.user_details;
     // this.#userDetails = userDetails;
     this._state = movie.user_details;
-    console.log(this._state);
-
     this.#setInnerHandlers();
 
   }
@@ -44,43 +42,41 @@ export default class FilmDetailsControlsView extends AbstractStatefulView {
     this.updateElement({
       'wishlist': !this._state.wishlist
     });
-    console.log(this._state);
-  }
+  };
 
   #onWatchedClick = () => {
     this.updateElement({
       'alreadyWatched': !this._state.alreadyWatched
     });
-  }
+  };
 
   #onFavouriteClick = () => {
     this.updateElement({
       'favorite': !this._state.favorite
     });
-  }
+  };
 
   #setInnerHandlers = () => {
     this.element
-    .querySelector('.film-details__control-button--watchlist')
-    .addEventListener('click', this.#onWishListClick);
+      .querySelector('.film-details__control-button--watchlist')
+      .addEventListener('click', this.#onWishListClick);
 
     this.element
-    .querySelector('.film-details__control-button--watched')
-    .addEventListener('click', this.#onWatchedClick);
+      .querySelector('.film-details__control-button--watched')
+      .addEventListener('click', this.#onWatchedClick);
 
     this.element
       .querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#onFavouriteClick);
-    
-  }
+
+  };
+
   _restoreHandlers = () => {
     this.#setInnerHandlers();
     this.setOnWishListClick(this._callback.wishListClick);
     this.setOnWatchedClick(this._callback.watchedClick);
     this.setOnFavouriteClick(this._callback.favoriteClick);
-  }
-
-
+  };
 
   setOnWishListClick = (callback) => {
     this._callback.wishListClick = callback;

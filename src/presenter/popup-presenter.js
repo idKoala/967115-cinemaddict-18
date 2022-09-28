@@ -102,6 +102,10 @@ export default class PopupPresenter {
     });
   };
 
+  #handleFormSubmit = () => {
+    //Заготовка на отправку формы
+  };
+
   #renderFilmDetailsNewComment = () => {
 
     this.#filmDetailsNewCommentComponent = new FilmDetailsNewCommentView();
@@ -109,9 +113,5 @@ export default class PopupPresenter {
     render(this.#filmDetailsNewCommentComponent, this.#filmDetailsBottomComponent.element);
   };
 
-  #handleFormSubmit = () => {
-    //Заготовка на отправку формы
-    console.log('form is submited');
-  };
 }
 

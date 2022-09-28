@@ -10,6 +10,7 @@ import FilmDetailsCommentsView from '../view/film-details-comments-view.js';
 import FilmDetailsCommentView from '../view/film-details-comment.js';
 import FilmDetailsCommentsListView from '../view/film-details-comments-list-view.js';
 import FilmDetailsNewCommentView from '../view/film-details-new-comment-view.js';
+import {remove} from '../framework/render.js';
 
 export default class PopupPresenter {
   #popupComponent = new PopupView();
@@ -26,6 +27,7 @@ export default class PopupPresenter {
   #onWatchedClick = null;
   #onFavouriteClick = null;
   #filmDetailsControlsComponent = null;
+  #filmDetailsNewCommentComponent = null;
 
 
   constructor (
@@ -72,6 +74,11 @@ export default class PopupPresenter {
     render(new FilmDetailsInfoView(this.#popupMovie), this.#filmDetailsTopComponent.element);
   };
 
+  destroy = () => {
+    remove(this.#popupComponent);
+    this.#renderPopup();
+  };
+
   #renderFilmDetailsControls = () => {
     this.#filmDetailsControlsComponent = new FilmDetailsControlsView(this.#popupMovie);
     this.#filmDetailsControlsComponent.setOnWishListClick(this.#onWishListClick);
@@ -96,7 +103,15 @@ export default class PopupPresenter {
   };
 
   #renderFilmDetailsNewComment = () => {
-    render(new FilmDetailsNewCommentView(), this.#filmDetailsBottomComponent.element);
+
+    this.#filmDetailsNewCommentComponent = new FilmDetailsNewCommentView();
+    //this.#filmDetailsNewCommentComponent.setOnFormSubmit(this.#handleFormSubmit);
+    render(this.#filmDetailsNewCommentComponent, this.#filmDetailsBottomComponent.element);
+  };
+
+  #handleFormSubmit = () => {
+    //Заготовка на отправку формы
+    console.log('form is submited');
   };
 }
 

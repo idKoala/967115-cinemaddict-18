@@ -1,4 +1,4 @@
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
 const createFilmDetailsControlsTemplate = (userDetails) => {
   const {wishlist, alreadyWatched, favorite} = userDetails;
@@ -22,18 +22,65 @@ const createFilmDetailsControlsTemplate = (userDetails) => {
         <button type="button" class="film-details__control-button film-details__control-button--favorite ${favoriteClassName}" id="favorite" name="favorite">Add to favorites</button>
       </section>`;};
 
-export default class FilmDetailsControlsView extends AbstractView {
+export default class FilmDetailsControlsView extends AbstractStatefulView {
   #userDetails = null;
 
   constructor (movie) {
     super();
-    const userDetails = movie.user_details;
-    this.#userDetails = userDetails;
+    // const userDetails = movie.user_details;
+    // this.#userDetails = userDetails;
+    this._state = movie.user_details;
+    console.log(this._state);
+
+    this.#setInnerHandlers();
+
   }
 
   get template () {
-    return createFilmDetailsControlsTemplate(this.#userDetails);
+    return createFilmDetailsControlsTemplate(this._state);
   }
+
+  #onWishListClick = () => {
+    this.updateElement({
+      'wishlist': !this._state.wishlist
+    });
+    console.log(this._state);
+  }
+
+  #onWatchedClick = () => {
+    this.updateElement({
+      'alreadyWatched': !this._state.alreadyWatched
+    });
+  }
+
+  #onFavouriteClick = () => {
+    this.updateElement({
+      'favorite': !this._state.favorite
+    });
+  }
+
+  #setInnerHandlers = () => {
+    this.element
+    .querySelector('.film-details__control-button--watchlist')
+    .addEventListener('click', this.#onWishListClick);
+
+    this.element
+    .querySelector('.film-details__control-button--watched')
+    .addEventListener('click', this.#onWatchedClick);
+
+    this.element
+      .querySelector('.film-details__control-button--favorite')
+      .addEventListener('click', this.#onFavouriteClick);
+    
+  }
+  _restoreHandlers = () => {
+    this.#setInnerHandlers();
+    this.setOnWishListClick(this._callback.wishListClick);
+    this.setOnWatchedClick(this._callback.watchedClick);
+    this.setOnFavouriteClick(this._callback.favoriteClick);
+  }
+
+
 
   setOnWishListClick = (callback) => {
     this._callback.wishListClick = callback;

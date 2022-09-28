@@ -1,8 +1,13 @@
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
-const createFilmDetailsNewCommentTemplate = () => `
+const createEmojiImageTemplate = (emoji) => emoji === null ? '' : `<img src="images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">`;
+
+const createFilmDetailsNewCommentTemplate = (data) => {
+  const {emotion} = data;
+
+  return `
 <form class="film-details__new-comment" action="" method="get">
-          <div class="film-details__add-emoji-label"></div>
+          <div class="film-details__add-emoji-label">${createEmojiImageTemplate(emotion)}</div>
 
           <label class="film-details__comment-label">
             <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
@@ -29,10 +34,59 @@ const createFilmDetailsNewCommentTemplate = () => `
               <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
             </label>
           </div>
-        </form>`;
+        </form>`;};
 
-export default class FilmDetailsNewCommentView extends AbstractView{
+export default class FilmDetailsNewCommentView extends AbstractStatefulView{
+
   get template () {
-    return createFilmDetailsNewCommentTemplate();
+    return createFilmDetailsNewCommentTemplate(this._state);
   }
+
+  constructor () {
+    super();
+    this._state = {
+      'author': null,
+      'comment': null,
+      'date': null,
+      'emotion': null
+    };
+    this.#setInnerHandlers();
+
+  }
+
+  #onEmojiClick = (evt) => {
+    this.updateElement({
+      'emotion': evt.target.value
+    });
+  };
+
+  #setInnerHandlers = () => {
+    this.element
+      .querySelectorAll('[name="comment-emoji"]')
+      .forEach((emoji) => emoji.addEventListener('change', this.#onEmojiClick));
+    this.element.querySelector('.film-details__comment-label').addEventListener('input', this.#onCommentInput);
+  };
+
+  #onCommentInput = (evt) => {
+    evt.preventDefault();
+    this._setState = {
+      'comment': evt.target.value
+    };
+  };
+
+  #onFormSubmit = (evt) => {
+    evt.preventDefault();
+    this._callback.formSubmit();
+  };
+
+  setOnFormSubmit = (callback) => {
+    this._callback.formSubmit = callback;
+    this.element.querySelector('form').addEventListener('submit', this.#onFormSubmit);
+  };
+
+
+  _restoreHandlers = () => {
+    this.#setInnerHandlers();
+    //this.setOnFormSubmit(this._callback.formSubmit);
+  };
 }

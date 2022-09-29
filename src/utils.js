@@ -8,6 +8,12 @@ const getDateTimeFromDate = (date) => dayjs(date).format('YYYY/MM/DD HH:mm');
 const convertMinutesToHoursMinutes = (minutes) =>
   `${Math.floor(minutes / MINUTES_IN_HOUR)}h ${minutes % MINUTES_IN_HOUR}m`;
 
+const getRandomToFixedOne = (a = 0, b = 1) => {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+
+  return (lower + Math.random() * (upper - lower + 1)).toFixed(1);
+};
 
 const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -54,5 +60,6 @@ export {getYearFromDate,
   getDateTimeFromDate,
   gerRandomArrayElement,
   getRandomSubArray,
-  updateItem
+  updateItem,
+  getRandomToFixedOne
 };

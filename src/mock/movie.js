@@ -1,7 +1,9 @@
-import {getRandomInteger, gerRandomArrayElement, getRandomSubArray} from '../utils.js';
+import {getRandomInteger, gerRandomArrayElement, getRandomSubArray, getRandomToFixedOne} from '../utils.js';
 import {TOTAL_COMMENTS} from './comment.js';
 
 const TOTAL_MOVIES = 13;
+const MIN_RATING = 1;
+const MAX_RATING = 5;
 const COMMENTS_INDEX_ARRAY = Array.from({length: TOTAL_COMMENTS}, (_value, index) => index + 1);
 
 const MOVIES_TITLES = [
@@ -30,7 +32,7 @@ const generateMovie = () => ({
   'film_info': {
     'title': gerRandomArrayElement(MOVIES_TITLES),
     'alternative_title': 'Laziness Who Sold Themselves',
-    'totalRating': 3.5,
+    'totalRating': getRandomToFixedOne(MIN_RATING, MAX_RATING),
     'poster': gerRandomArrayElement(MOVIES_POSTERS),
     'ageRating': 0,
     'director': 'Tom Ford',

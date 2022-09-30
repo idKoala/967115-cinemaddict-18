@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import {FilterType} from './const.js';
 
 const MINUTES_IN_HOUR = 60;
 
@@ -53,6 +54,14 @@ const updateItem = (items, update) => {
   ];
 };
 
+const filter = {
+  [FilterType.FAVOURITES]: (movies) => movies.filter((movie) => movie.user_details.favorite),
+  [FilterType.HISTORY]: (movies) => movies.filter((movie) => movie.user_details.alreadyWatched),
+  [FilterType.WATCHLIST]: (movies) => movies.filter((movie) => movie.user_details.wishlist)
+};
+
+const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
 export {getYearFromDate,
   convertMinutesToHoursMinutes,
   getRandomInteger,
@@ -61,5 +70,7 @@ export {getYearFromDate,
   gerRandomArrayElement,
   getRandomSubArray,
   updateItem,
-  getRandomToFixedOne
+  getRandomToFixedOne,
+  filter,
+  capitalizeFirstLetter
 };

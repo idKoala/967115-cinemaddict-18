@@ -44,7 +44,7 @@ export default class BoardPresenter {
   };
 
   #renderBoard = () => {
-    this.#renderSort();
+    this.#renderSort(this.#movies);
     render(this.#boardComponent, this.#boardContainer);
     render(this.#filmsListComponent, this.#boardComponent.element);
 
@@ -129,7 +129,7 @@ export default class BoardPresenter {
   };
 
   #handleSortTypeChange = (sortType) => {
-     if (this.#currentSortType === sortType) {
+    if (this.#currentSortType === sortType) {
       return;
     }
 

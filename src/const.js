@@ -4,4 +4,11 @@ const SortType = {
   DATE: 'date'
 };
 
-export {SortType};
+const FilterType = {
+  // ALL: 'all',
+  FAVOURITES: 'favourites',
+  HISTORY: 'history',
+  WATCHLIST: 'watchlist'
+};
+
+export {SortType, FilterType};

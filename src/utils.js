@@ -46,18 +46,53 @@ const getRandomSubArray = (arr) => {
   return Array.from(shuffledSet);
 };
 
-const updateItem = (items, update) => {
-  const index = items.findIndex((item) => item.id === update.id);
+// не нужно. Заменена обработка на данных модели
+// const updateItem = (items, update) => {
+//   const index = items.findIndex((item) => item.id === update.id);
 
-  if (index === -1) {
-    return items;
+//   if (index === -1) {
+//     return items;
+//   }
+
+//   return [
+//     ...items.slice(0, index),
+//     update,
+//     ...items.slice(index + 1)
+//   ];
+// };
+
+const getWeightForNullDate = (dateA, dateB) => {
+  if (dateA === null && dateB === null) {
+    return 0;
   }
 
-  return [
-    ...items.slice(0, index),
-    update,
-    ...items.slice(index + 1)
-  ];
+  if (dateA === null) {
+    return 1;
+  }
+
+  if (dateB === null) {
+    return -1;
+  }
+
+  return null;
+};
+
+const sortMoviesRating = (a, b) => {
+  if (a.film_info.totalRating > b.film_info.totalRating) {
+    return -1;
+  }
+
+  if (a.film_info.totalRating > b.film_info.totalRating) {
+    return 1;
+  }
+
+  return 0;
+};
+
+const sortMovieDate = (a, b) => {
+  const weight = getWeightForNullDate(a.film_info.release.date, b.film_info.release.date);
+
+  return weight ?? dayjs(a.film_info.release.date).diff(dayjs(b.film_info.release.date));
 };
 
 
@@ -70,8 +105,10 @@ export {getYearFromDate,
   getDateTimeFromDate,
   gerRandomArrayElement,
   getRandomSubArray,
-  updateItem,
+  // updateItem,
   getRandomToFixedOne,
   Filter,
-  capitalizeFirstLetter
+  capitalizeFirstLetter,
+  sortMoviesRating,
+  sortMovieDate
 };

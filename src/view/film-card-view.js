@@ -3,8 +3,8 @@ import AbstractView from '../framework/view/abstract-view.js';
 
 const createFilmCardTemplate = (movie) =>
 { const {
-  title,
   totalRating,
+  title,
   runtime,
   genre,
   description,

@@ -10,4 +10,14 @@ const FilterType = {
   WATCHLIST: 'watchlist'
 };
 
-export {SortType, FilterType};
+const UserAction = {
+  UPDATE_MOVIE: 'UPDATE_MOVIE'
+}
+
+const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR'
+}
+
+export {SortType, FilterType, UserAction, UpdateType};

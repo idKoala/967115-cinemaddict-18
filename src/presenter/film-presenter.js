@@ -2,6 +2,7 @@ import {remove, render, replace} from '../framework/render.js';
 import FilmCardView from '../view/film-card-view.js';
 import PopupPresenter from './popup-presenter.js';
 import CommentsModel from '../model/comments-model.js';
+import {UserAction, UpdateType} from '../const.js';
 
 const siteBodyElement = document.querySelector('body');
 const footerElement = document.querySelector('.footer');
@@ -59,15 +60,30 @@ export default class FilmPresenter {
   };
 
   #onWishListClick = () => {
-    this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, wishlist: !this.#movie.user_details.wishlist}});
+    // this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, wishlist: !this.#movie.user_details.wishlist}});
+    this.#changeMovieData(
+      UserAction.UPDATE_MOVIE,
+      UpdateType.PATCH,
+      {...this.#movie, user_details: {...this.#movie.user_details, wishlist: !this.#movie.user_details.wishlist}}
+    );
   };
 
   #onWatchedClick = () => {
-    this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}});
+    // this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}});
+    this.#changeMovieData(
+      UserAction.UPDATE_MOVIE,
+      UpdateType.PATCH,
+      {...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}}
+    )
   };
 
   #onFavouriteClick = () => {
-    this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}});
+    // this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}});
+    this.#changeMovieData(
+      UserAction.UPDATE_MOVIE,
+      UpdateType.PATCH,
+      {...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}}
+    )
   };
 
 

@@ -6,7 +6,8 @@ import ShowMoreButtonView from '../view/show-more-button-view.js';
 import FilmPresenter from './film-presenter.js';
 import FilmsListTitleView from '../view/films-list-title-view.js';
 import SortView from '../view/sort-view.js';
-import {updateItem, sortMoviesRating, sortMovieDate} from '../utils.js';
+import {sortMoviesRating, sortMovieDate} from '../utils.js';
+import {Filter} from '../utils.js';
 import {SortType, UpdateType, UserAction} from '../const.js';
 
 const MOVIES_COUNT_PER_STEP = 5;
@@ -21,24 +22,32 @@ export default class BoardPresenter {
   #sortContainer = null;
   #boardContainer = null;
   #moviesModel = null;
+  #filterModel = null;
   #currentSortType = SortType.DEFAULT;
   #filmPresenter = new Map();
 
-  constructor (boardContainer, moviesModel) {
+  constructor (boardContainer, moviesModel, filterModel) {
     this.#boardContainer = boardContainer;
     this.#moviesModel = moviesModel;
+    this.#filterModel = filterModel;
+
     this.#moviesModel.addObserver(this.#handleModelEvent);
+    this.#filterModel.addObserver(this.#handleModelEvent);
   }
 
   get movies () {
+    const filterType = this.#filterModel.filter;
+    const movies = this.#moviesModel.movies;
+    const filteredMovies = Filter[filterType](movies);
+    
     switch (this.#currentSortType) {
       case SortType.RATING:
-        return [...this.#moviesModel.movies].sort(sortMoviesRating);
+        return filteredMovies.sort(sortMoviesRating);
       case SortType.DATE:
-        return [...this.#moviesModel.movies].sort(sortMovieDate);
+        return filteredMovies.sort(sortMovieDate);
     }
 
-    return this.#moviesModel.movies;
+    return filteredMovies;
   }
 
 

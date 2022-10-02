@@ -14,7 +14,7 @@ const moviesModel = new MoviesModel();
 const filterModel = new FilterModel();
 const movies = [...moviesModel.movies];
 const filterPresenter = new FilterPresenter(siteMainElement, filterModel, moviesModel);
-const boardPresenter = new BoardPresenter(siteMainElement, moviesModel);
+const boardPresenter = new BoardPresenter(siteMainElement, moviesModel, filterModel);
 
 render(new UserRatingView(), profileElement);
 render(new FilmsCounterView(movies), footerElement);

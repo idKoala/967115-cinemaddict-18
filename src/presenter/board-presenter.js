@@ -31,6 +31,10 @@ export default class BoardPresenter {
     this.#moviesModel = moviesModel;
   }
 
+  get movies () {
+    return this.#moviesModel.movies;
+  }
+
 
   init () {
     this.#movies = [...this.#moviesModel.movies];

@@ -5,6 +5,7 @@ const SortType = {
 };
 
 const FilterType = {
+  ALL: 'all',
   FAVOURITES: 'favourites',
   HISTORY: 'history',
   WATCHLIST: 'watchlist'

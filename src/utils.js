@@ -4,6 +4,7 @@ import {FilterType} from './const.js';
 const MINUTES_IN_HOUR = 60;
 
 const Filter = {
+  [FilterType.ALL]: (movies) => movies.filter((movie) => movie),
   [FilterType.FAVOURITES]: (movies) => movies.filter((movie) => movie.user_details.favorite),
   [FilterType.HISTORY]: (movies) => movies.filter((movie) => movie.user_details.alreadyWatched),
   [FilterType.WATCHLIST]: (movies) => movies.filter((movie) => movie.user_details.wishlist)
@@ -45,21 +46,6 @@ const getRandomSubArray = (arr) => {
 
   return Array.from(shuffledSet);
 };
-
-// не нужно. Заменена обработка на данных модели
-// const updateItem = (items, update) => {
-//   const index = items.findIndex((item) => item.id === update.id);
-
-//   if (index === -1) {
-//     return items;
-//   }
-
-//   return [
-//     ...items.slice(0, index),
-//     update,
-//     ...items.slice(index + 1)
-//   ];
-// };
 
 const getWeightForNullDate = (dateA, dateB) => {
   if (dateA === null && dateB === null) {

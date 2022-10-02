@@ -1,6 +1,6 @@
-import {filter} from '../utils.js';
+import {Filter} from '../utils.js';
 
-export const generateFilter = (movies) => Object.entries(filter).map(
+export const generateFilter = (movies) => Object.entries(Filter).map(
   ([filterName, filterMovies]) => ({
     name: filterName,
     count: filterMovies(movies).length

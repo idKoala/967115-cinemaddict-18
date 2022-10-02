@@ -3,6 +3,12 @@ import {FilterType} from './const.js';
 
 const MINUTES_IN_HOUR = 60;
 
+const Filter = {
+  [FilterType.FAVOURITES]: (movies) => movies.filter((movie) => movie.user_details.favorite),
+  [FilterType.HISTORY]: (movies) => movies.filter((movie) => movie.user_details.alreadyWatched),
+  [FilterType.WATCHLIST]: (movies) => movies.filter((movie) => movie.user_details.wishlist)
+};
+
 const getYearFromDate = (date) => dayjs(date).format('YYYY');
 const getDayMonthYearFromDate = (date) => dayjs(date).format('D MMMM YYYY');
 const getDateTimeFromDate = (date) => dayjs(date).format('YYYY/MM/DD HH:mm');
@@ -10,10 +16,10 @@ const convertMinutesToHoursMinutes = (minutes) =>
   `${Math.floor(minutes / MINUTES_IN_HOUR)}h ${minutes % MINUTES_IN_HOUR}m`;
 
 const getRandomToFixedOne = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+  const lower = Math.floor(Math.min(a, b));
+  const upper = Math.ceil(Math.max(a, b));
 
-  return (lower + Math.random() * (upper - lower + 1)).toFixed(1);
+  return (lower + Math.random() * (upper - lower)).toFixed(1);
 };
 
 const getRandomInteger = (a = 0, b = 1) => {
@@ -54,11 +60,6 @@ const updateItem = (items, update) => {
   ];
 };
 
-const filter = {
-  [FilterType.FAVOURITES]: (movies) => movies.filter((movie) => movie.user_details.favorite),
-  [FilterType.HISTORY]: (movies) => movies.filter((movie) => movie.user_details.alreadyWatched),
-  [FilterType.WATCHLIST]: (movies) => movies.filter((movie) => movie.user_details.wishlist)
-};
 
 const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -71,6 +72,6 @@ export {getYearFromDate,
   getRandomSubArray,
   updateItem,
   getRandomToFixedOne,
-  filter,
+  Filter,
   capitalizeFirstLetter
 };

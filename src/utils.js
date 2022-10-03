@@ -4,7 +4,7 @@ import {FilterType} from './const.js';
 const MINUTES_IN_HOUR = 60;
 
 const Filter = {
-  [FilterType.ALL]: (movies) => movies.filter((movie) => movie),
+  [FilterType.ALL]: (movies) => movies.filter((movie) => Boolean(movie.id)),
   [FilterType.FAVOURITES]: (movies) => movies.filter((movie) => movie.user_details.favorite),
   [FilterType.HISTORY]: (movies) => movies.filter((movie) => movie.user_details.alreadyWatched),
   [FilterType.WATCHLIST]: (movies) => movies.filter((movie) => movie.user_details.wishlist)

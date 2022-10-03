@@ -1,16 +1,23 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import {capitalizeFirstLetter} from '../utils.js';
 
 const createMenuItemTemplate = (filter, currentFilterType) => {
   const {type, name, count} = filter;
-
+  if (type === 'all') {
+    return `<a 
+      href="#${type}" 
+      class="main-navigation__item ${
+        type === currentFilterType ? 'main-navigation__item--active' : ''
+      }" data-filter-type='${type}'>
+      ${name} 
+      </a>`;
+  }
   return `
   <a 
     href="#${type}" 
     class="main-navigation__item ${
       type === currentFilterType ? 'main-navigation__item--active' : ''
     }" data-filter-type='${type}'>
-    ${capitalizeFirstLetter(name.toLowerCase())} 
+    ${name} 
     <span 
       class="main-navigation__item-count">
       ${count}
@@ -19,13 +26,9 @@ const createMenuItemTemplate = (filter, currentFilterType) => {
 };
 
 const createMenuTemplate = (filterItems, currentFilterType) => {
-  // Заменить на reduce
-  const filterItemsTemplate = filterItems.map((filter) => createMenuItemTemplate(filter, currentFilterType)).join('');
-
-
+  const filterItemsTemplate = filterItems.reduce((previousValue, currentValue) => previousValue + createMenuItemTemplate(currentValue, currentFilterType), '');
   return `
     <nav class="main-navigation">
-      <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
         ${filterItemsTemplate}
       </nav>
 `;};

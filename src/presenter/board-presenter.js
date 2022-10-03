@@ -8,7 +8,7 @@ import FilmsListTitleView from '../view/films-list-title-view.js';
 import SortView from '../view/sort-view.js';
 import {sortMoviesRating, sortMovieDate} from '../utils.js';
 import {Filter} from '../utils.js';
-import {SortType, UpdateType, UserAction} from '../const.js';
+import {SortType, UpdateType, UserAction, FilterType} from '../const.js';
 
 const MOVIES_COUNT_PER_STEP = 5;
 
@@ -17,7 +17,7 @@ export default class BoardPresenter {
   #filmsListComponent = new FilmsListView();
   #filmsListContainerComponent = new FilmsListContainerView();
   #showMoreButtonComponent = null;
-  #filmsListTitleComponent = new FilmsListTitleView();
+  #filmsListTitleComponent = null;
   #renderedMoviesCount = MOVIES_COUNT_PER_STEP;
   #sortContainer = null;
   #boardContainer = null;
@@ -25,6 +25,7 @@ export default class BoardPresenter {
   #filterModel = null;
   #currentSortType = SortType.DEFAULT;
   #filmPresenter = new Map();
+  #filterType = FilterType.ALL;
 
   constructor (boardContainer, moviesModel, filterModel) {
     this.#boardContainer = boardContainer;
@@ -36,9 +37,9 @@ export default class BoardPresenter {
   }
 
   get movies () {
-    const filterType = this.#filterModel.filter;
+    this.#filterType = this.#filterModel.filter;
     const movies = this.#moviesModel.movies;
-    const filteredMovies = Filter[filterType](movies);
+    const filteredMovies = Filter[this.#filterType](movies);
     
     switch (this.#currentSortType) {
       case SortType.RATING:
@@ -57,6 +58,7 @@ export default class BoardPresenter {
   }
 
   #renderFilmsListTitle = () => {
+    this.#filmsListTitleComponent = new FilmsListTitleView(this.#filterType);
     render(this.#filmsListTitleComponent, this.#filmsListComponent.element);
   };
 
@@ -110,7 +112,7 @@ export default class BoardPresenter {
     this.#renderedMoviesCount = newRenderesMoviesCount; 
     this.#renderFilms(movies);
 
-    if (this.#renderedMoviesCount > moviesCount) {
+    if (this.#renderedMoviesCount === moviesCount) {
       remove(this.#showMoreButtonComponent);
     }
   };
@@ -146,8 +148,11 @@ export default class BoardPresenter {
     this.#filmPresenter.clear();
     this.#renderedMoviesCount = MOVIES_COUNT_PER_STEP;
     remove(this.#sortContainer);
-    remove(this.#filmsListTitleComponent);
     remove(this.#showMoreButtonComponent);
+    
+    if (this.#filmsListTitleComponent) {
+      remove(this.#filmsListTitleComponent);
+    }
 
     if (resetSortType) {
       this.#currentSortType = SortType.DEFAULT;

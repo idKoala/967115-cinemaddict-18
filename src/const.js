@@ -14,7 +14,7 @@ const FilterType = {
 const UserAction = {
   UPDATE_MOVIE: 'UPDATE_MOVIE',
   DELEtE_COMMENT: 'DELETE_COMMENT'
-}
+};
 
 const UpdateType = {
   PATCH: 'PATCH',
@@ -23,7 +23,7 @@ const UpdateType = {
   INIT: 'INIT',
   COMMENTS_INIT: 'COMMENTS_INIT',
   COMMENT_DELETE: 'COMMENT_DELETE'
-}
+};
 
 const END_POINT = 'https://18.ecmascript.pages.academy/cinemaddict/';
 const AUTORIZATION = 'Basic hlamgen4wcl1sa2j';

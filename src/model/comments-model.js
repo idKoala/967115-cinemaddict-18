@@ -15,26 +15,25 @@ export default class CommentsModel extends Observable {
   init = async () => {
     try {
       this.#comments = await this.#commentsApiService.getComments(this.#movie);
-      console.log('INIT COMMENTS', this.#comments);
     } catch(err) {
-      this.#comments =[];
+      this.#comments = [];
     }
 
     this._notify(UpdateType.COMMENTS_INIT);
-  }
+  };
 
   get comments () {
     return this.#comments;
-  };
+  }
 
   addComment = (updateType, update) => {
     this.#comments = [
       update,
       ...this.#comments
     ];
-    
+
     this._notify(updateType, update);
-  }
+  };
 
   deleteComment = (updateType, update) => {
     const index = this.#comments.findIndex((comment) => comment.id === update.id);
@@ -49,5 +48,5 @@ export default class CommentsModel extends Observable {
     };
 
     this._notify(updateType, update);
-  }
+  };
 }

@@ -75,7 +75,7 @@ export default class FilmPresenter {
       UserAction.UPDATE_MOVIE,
       UpdateType.PATCH,
       {...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}}
-    )
+    );
   };
 
   #onFavouriteClick = () => {
@@ -83,14 +83,13 @@ export default class FilmPresenter {
       UserAction.UPDATE_MOVIE,
       UpdateType.PATCH,
       {...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}}
-    )
+    );
   };
 
 
   #showPopup = (movie) => {
     this.#commentsModel = new CommentsModel(new CommentsApiService(END_POINT, AUTORIZATION), movie);
     this.#commentsModel.init();
-    console.log('Show popup comments', this.#commentsModel.comments);
     this.#popupPresenter = new PopupPresenter(
       footerElement,
       movie,

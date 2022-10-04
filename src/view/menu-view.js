@@ -6,8 +6,8 @@ const createMenuItemTemplate = (filter, currentFilterType) => {
     return `<a 
       href="#${type}" 
       class="main-navigation__item ${
-        type === currentFilterType ? 'main-navigation__item--active' : ''
-      }" data-filter-type='${type}'>
+  type === currentFilterType ? 'main-navigation__item--active' : ''
+}" data-filter-type='${type}'>
       ${name} 
       </a>`;
   }
@@ -15,8 +15,8 @@ const createMenuItemTemplate = (filter, currentFilterType) => {
   <a 
     href="#${type}" 
     class="main-navigation__item ${
-      type === currentFilterType ? 'main-navigation__item--active' : ''
-    }" data-filter-type='${type}'>
+  type === currentFilterType ? 'main-navigation__item--active' : ''
+}" data-filter-type='${type}'>
     ${name} 
     <span 
       class="main-navigation__item-count">
@@ -51,11 +51,11 @@ export default class MenuView extends AbstractView {
     this._callback.filterTypeClick = callback;
     this.element.addEventListener('click', this.#onFilterTypeClick);
 
-  }
+  };
 
   #onFilterTypeClick = (evt) => {
     evt.preventDefault();
     this._callback.filterTypeClick(evt.target.dataset.filterType);
-  }
+  };
 
 }

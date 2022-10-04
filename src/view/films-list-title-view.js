@@ -6,12 +6,12 @@ const filmsListTitleText = {
   [FilterType.FAVOURITES]: 'There are no favorite movies now',
   [FilterType.HISTORY]: 'There are no watched movies now',
   [FilterType.WATCHLIST]: 'There are no movies to watch now'
-}
+};
 
-const createFilmsListTitleTemplate = (filterType) => 
-  { const emptyListMessage = filmsListTitleText[filterType];
-    
-    return `<h2 class="films-list__title">${emptyListMessage}</h2>`};
+const createFilmsListTitleTemplate = (filterType) =>
+{ const emptyListMessage = filmsListTitleText[filterType];
+
+  return `<h2 class="films-list__title">${emptyListMessage}</h2>`;};
 
 export default class FilmsListTitleView extends AbstractView {
   #filterType = null;
@@ -20,7 +20,7 @@ export default class FilmsListTitleView extends AbstractView {
     super();
     this.#filterType = filterType;
   }
-  
+
   get template () {
     return createFilmsListTitleTemplate(this.#filterType);
   }

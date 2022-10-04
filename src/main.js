@@ -15,7 +15,6 @@ const footerElement = document.querySelector('.footer');
 const moviesModel = new MoviesModel(new MoviesApiService(END_POINT, AUTORIZATION));
 const filterModel = new FilterModel();
 const movies = [...moviesModel.movies];
-console.log(`Movies before INIT`, movies);
 const filterPresenter = new FilterPresenter(siteMainElement, filterModel, moviesModel);
 const boardPresenter = new BoardPresenter(siteMainElement, moviesModel, filterModel);
 

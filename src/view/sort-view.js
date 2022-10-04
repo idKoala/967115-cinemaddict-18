@@ -1,20 +1,18 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import {SortType} from '../const.js';
 
-const createSortItemsTemplate = (sortType, value, currentSortType) => {
-  return `
+const createSortItemsTemplate = (sortType, value, currentSortType) => `
   <li><a href="#" class="sort__button ${currentSortType === value ? 'sort__button--active' : ''}" data-sort-type=${value}>Sort by ${value}</a></li>
   `;
-}
 
 const createSortTemplate = (currentSortType) =>
-  { let sortList = '';
-    for (const [sortType, value] of Object.entries(SortType)) {
-      sortList += createSortItemsTemplate(sortType, value, currentSortType);
-    }
-    return `<ul class="sort">
+{ let sortList = '';
+  for (const [sortType, value] of Object.entries(SortType)) {
+    sortList += createSortItemsTemplate(sortType, value, currentSortType);
+  }
+  return `<ul class="sort">
     ${sortList}
-</ul>`};
+</ul>`;};
 
 {/* <li><a href="#" class="sort__button ${currentSortType === SortType.DEFAULT ? 'sort__button--active' : ''}" data-sort-type=${SortType.DEFAULT}>Sort by default</a></li>
     <li><a href="#" class="sort__button ${currentSortType === SortType.DATE ? 'sort__button--active' : ''}" data-sort-type=${SortType.DATE}>Sort by date</a></li>
@@ -28,7 +26,7 @@ export default class SortView extends AbstractView {
     this.#currentSortType = currentSortType;
   }
 
-  
+
   get template () {
     return createSortTemplate(this.#currentSortType);
   }

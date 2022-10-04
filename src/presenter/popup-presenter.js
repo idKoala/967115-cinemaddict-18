@@ -62,10 +62,9 @@ export default class PopupPresenter {
         this.#renderComments();
         break;
       case UpdateType.COMMENT_DELETE:
-        console.log('case COMMENT_DELETE');
         break;
     }
-  }
+  };
 
   #renderPopup = () => {
     render(this.#popupComponent, this.#popupContainer, RenderPosition.AFTEREND);
@@ -86,10 +85,10 @@ export default class PopupPresenter {
     if (this.#isLoading) {
       return;
     }
-    
+
     this.#renderFilmDetailsComments();
     this.#renderFilmDetailsNewComment();
-  }
+  };
 
   #renderFilmDetailsCloseButton = () => {
     render(this.#filmDetailsCloseButtonComponent, this.#filmDetailsTopComponent.element);
@@ -133,7 +132,7 @@ export default class PopupPresenter {
   #clearFilmDetailsComments = () => {
     remove(this.#filmDetailsCommentsComponent);
     remove(this.#filmDetailsCommentsListComponent);
-  }
+  };
 
   #handleFormSubmit = () => {
     //Заготовка на отправку формы

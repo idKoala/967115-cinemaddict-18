@@ -43,7 +43,7 @@ export default class BoardPresenter {
     this.#filterType = this.#filterModel.filter;
     const movies = this.#moviesModel.movies;
     const filteredMovies = Filter[this.#filterType](movies);
-    
+
     switch (this.#currentSortType) {
       case SortType.RATING:
         return filteredMovies.sort(sortMoviesRating);
@@ -67,7 +67,7 @@ export default class BoardPresenter {
 
   #renderLoading = () => {
     render(this.#loadingComponent, this.#filmsListComponent.element);
-  }
+  };
 
   #renderBoard = () => {
     this.#renderSort();
@@ -96,7 +96,7 @@ export default class BoardPresenter {
   #renderFilmsList = () => {
     const moviesCount = this.movies.length;
     const movies = this.movies.slice(0, Math.min(moviesCount, MOVIES_COUNT_PER_STEP));
-    
+
     render(this.#filmsListContainerComponent, this.#filmsListComponent.element);
 
     this.#renderFilms(movies);
@@ -121,7 +121,7 @@ export default class BoardPresenter {
 
     const movies = this.movies.slice(this.#renderedMoviesCount, newRenderesMoviesCount);
 
-    this.#renderedMoviesCount = newRenderesMoviesCount; 
+    this.#renderedMoviesCount = newRenderesMoviesCount;
     this.#renderFilms(movies);
 
     if (this.#renderedMoviesCount === moviesCount) {
@@ -130,13 +130,12 @@ export default class BoardPresenter {
   };
 
   #handleViewAction = (actionType, updateType, update) => {
-    console.log(actionType, updateType, update);
     switch (actionType) {
       case UserAction.UPDATE_MOVIE:
         this.#moviesModel.updateMovie(updateType, update);
         break;
     }
-  }
+  };
 
   #handleModelEvent = (updateType, data) => {
     switch (updateType) {
@@ -158,7 +157,7 @@ export default class BoardPresenter {
         this.#renderBoard();
         break;
     }
-  }
+  };
 
   #clearFilms = ({resetSortType = false} = {}) => {
     this.#filmPresenter.forEach((presenter) => presenter.destroy());
@@ -167,7 +166,7 @@ export default class BoardPresenter {
     remove(this.#sortContainer);
     remove(this.#showMoreButtonComponent);
     remove(this.#loadingComponent);
-    
+
     if (this.#filmsListTitleComponent) {
       remove(this.#filmsListTitleComponent);
     }

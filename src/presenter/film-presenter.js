@@ -89,6 +89,8 @@ export default class FilmPresenter {
 
   #showPopup = (movie) => {
     this.#commentsModel = new CommentsModel(new CommentsApiService(END_POINT, AUTORIZATION), movie);
+    this.#commentsModel.init();
+    console.log('Show popup comments', this.#commentsModel.comments);
     this.#popupPresenter = new PopupPresenter(
       footerElement,
       movie,
@@ -98,7 +100,6 @@ export default class FilmPresenter {
       this.#onFavouriteClick);
     this.#hidePopup();
     this.#popupPresenter.init();
-    this.#commentsModel.init();
     siteBodyElement.classList.add('hide-overflow');
   };
 

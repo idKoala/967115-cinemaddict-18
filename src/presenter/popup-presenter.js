@@ -11,6 +11,7 @@ import FilmDetailsCommentView from '../view/film-details-comment.js';
 import FilmDetailsCommentsListView from '../view/film-details-comments-list-view.js';
 import FilmDetailsNewCommentView from '../view/film-details-new-comment-view.js';
 import {remove} from '../framework/render.js';
+import {UpdateType, UserAction} from '../const.js';
 
 export default class PopupPresenter {
   #popupComponent = new PopupView();
@@ -28,7 +29,8 @@ export default class PopupPresenter {
   #onFavouriteClick = null;
   #filmDetailsControlsComponent = null;
   #filmDetailsNewCommentComponent = null;
-
+  #filmDetailsCommentsComponent = null;
+  #isLoading = true;
 
   constructor (
     popupContainer,
@@ -47,9 +49,22 @@ export default class PopupPresenter {
   }
 
   init () {
-    this.#comments = [...this.#commentsModel.comments];
+    this.#comments = this.#commentsModel.comments;
     this.#renderPopup();
 
+    this.#commentsModel.addObserver(this.#handleCommentsModelEvent);
+  }
+
+  #handleCommentsModelEvent = (updateType, data) => {
+    switch (updateType) {
+      case UpdateType.COMMENTS_INIT:
+        this.#isLoading = false;
+        this.#renderComments();
+        break;
+      case UpdateType.COMMENT_DELETE:
+        console.log('case COMMENT_DELETE');
+        break;
+    }
   }
 
   #renderPopup = () => {
@@ -61,10 +76,20 @@ export default class PopupPresenter {
     this.#renderFilmDetailsCloseButton();
     this.#renderFilmDetailsInfo();
     this.#renderFilmDetailsControls();
-    this.#renderFilmDetailsComments();
-    this.#renderFilmDetailsNewComment();
+
+    // this.#renderFilmDetailsComments();
+    // this.#renderFilmDetailsNewComment();
 
   };
+
+  #renderComments = () => {
+    if (this.#isLoading) {
+      return;
+    }
+    
+    this.#renderFilmDetailsComments();
+    this.#renderFilmDetailsNewComment();
+  }
 
   #renderFilmDetailsCloseButton = () => {
     render(this.#filmDetailsCloseButtonComponent, this.#filmDetailsTopComponent.element);
@@ -89,18 +114,26 @@ export default class PopupPresenter {
 
   };
 
+  // В комментарий еще нужно передать обработчик на кнопку удаления
   #renderFilmDetailsComment = (comment) => {
     render(new FilmDetailsCommentView(comment), this.#filmDetailsCommentsListComponent.element);
   };
 
   #renderFilmDetailsComments = () => {
-    render(new FilmDetailsCommentsView(this.#popupMovie), this.#filmDetailsBottomComponent.element);
+    const comments = this.#commentsModel.comments;
+    this.#filmDetailsCommentsComponent = new FilmDetailsCommentsView(this.#popupMovie);
+    render(this.#filmDetailsCommentsComponent, this.#filmDetailsBottomComponent.element);
     render(this.#filmDetailsCommentsListComponent, this.#filmDetailsBottomComponent.element);
 
-    this.#comments.forEach((comment) => {
+    comments.forEach((comment) => {
       this.#renderFilmDetailsComment(comment);
     });
   };
+
+  #clearFilmDetailsComments = () => {
+    remove(this.#filmDetailsCommentsComponent);
+    remove(this.#filmDetailsCommentsListComponent);
+  }
 
   #handleFormSubmit = () => {
     //Заготовка на отправку формы

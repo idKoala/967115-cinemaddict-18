@@ -18,7 +18,11 @@ const UserAction = {
 const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
-  MAJOR: 'MAJOR'
+  MAJOR: 'MAJOR',
+  INIT: 'INIT'
 }
 
-export {SortType, FilterType, UserAction, UpdateType};
+const END_POINT = 'https://18.ecmascript.pages.academy/cinemaddict/';
+const AUTORIZATION = 'Basic hlamgen4wcl1sa2j';
+
+export {SortType, FilterType, UserAction, UpdateType, END_POINT, AUTORIZATION};

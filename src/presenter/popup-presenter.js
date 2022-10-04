@@ -109,7 +109,6 @@ export default class PopupPresenter {
   #renderFilmDetailsNewComment = () => {
 
     this.#filmDetailsNewCommentComponent = new FilmDetailsNewCommentView();
-    //this.#filmDetailsNewCommentComponent.setOnFormSubmit(this.#handleFormSubmit);
     render(this.#filmDetailsNewCommentComponent, this.#filmDetailsBottomComponent.element);
   };
 

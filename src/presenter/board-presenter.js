@@ -5,6 +5,7 @@ import FilmsListContainerView from '../view/films-list-container-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import FilmPresenter from './film-presenter.js';
 import FilmsListTitleView from '../view/films-list-title-view.js';
+import LoadingView from '../view/loading-view.js';
 import SortView from '../view/sort-view.js';
 import {sortMoviesRating, sortMovieDate} from '../utils.js';
 import {Filter} from '../utils.js';
@@ -16,6 +17,7 @@ export default class BoardPresenter {
   #boardComponent = new BoardView();
   #filmsListComponent = new FilmsListView();
   #filmsListContainerComponent = new FilmsListContainerView();
+  #loadingComponent = new LoadingView();
   #showMoreButtonComponent = null;
   #filmsListTitleComponent = null;
   #renderedMoviesCount = MOVIES_COUNT_PER_STEP;
@@ -26,6 +28,7 @@ export default class BoardPresenter {
   #currentSortType = SortType.DEFAULT;
   #filmPresenter = new Map();
   #filterType = FilterType.ALL;
+  #isLoading = true;
 
   constructor (boardContainer, moviesModel, filterModel) {
     this.#boardContainer = boardContainer;
@@ -62,9 +65,18 @@ export default class BoardPresenter {
     render(this.#filmsListTitleComponent, this.#filmsListComponent.element);
   };
 
+  #renderLoading = () => {
+    render(this.#loadingComponent, this.#filmsListComponent.element);
+  }
+
   #renderBoard = () => {
     this.#renderSort();
     render(this.#boardComponent, this.#boardContainer);
+    if (this.#isLoading) {
+      this.#renderLoading();
+      return;
+    }
+
     render(this.#filmsListComponent, this.#boardComponent.element);
 
     if (this.movies.length === 0) {
@@ -127,7 +139,6 @@ export default class BoardPresenter {
   }
 
   #handleModelEvent = (updateType, data) => {
-
     switch (updateType) {
       case UpdateType.PATCH:
         this.#filmPresenter.get(data.id).init(data);
@@ -140,6 +151,12 @@ export default class BoardPresenter {
         this.#clearFilms({resetSortType: true});
         this.#renderBoard();
         break;
+      case UpdateType.INIT:
+        this.#isLoading = false;
+        // remove(this.#loadingComponent);
+        this.#clearFilms();
+        this.#renderBoard();
+        break;
     }
   }
 
@@ -149,6 +166,7 @@ export default class BoardPresenter {
     this.#renderedMoviesCount = MOVIES_COUNT_PER_STEP;
     remove(this.#sortContainer);
     remove(this.#showMoreButtonComponent);
+    remove(this.#loadingComponent);
     
     if (this.#filmsListTitleComponent) {
       remove(this.#filmsListTitleComponent);
@@ -169,8 +187,8 @@ export default class BoardPresenter {
   };
 
   #renderFilmCard = (movie) => {
-    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent.element, this.#handleViewAction);
-    filmPresenter.init(movie);
+    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent.element, this.#handleViewAction, movie);
+    filmPresenter.init();
     this.#filmPresenter.set(movie.id, filmPresenter);
   };
 }

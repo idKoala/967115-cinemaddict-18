@@ -3,6 +3,8 @@ import FilmCardView from '../view/film-card-view.js';
 import PopupPresenter from './popup-presenter.js';
 import CommentsModel from '../model/comments-model.js';
 import {UserAction, UpdateType} from '../const.js';
+import CommentsApiService from '../comments-api-service.js';
+import {END_POINT, AUTORIZATION} from '../const.js';
 
 const siteBodyElement = document.querySelector('body');
 const footerElement = document.querySelector('.footer');
@@ -12,20 +14,21 @@ export default class FilmPresenter {
   #filmsListContainerComponent = null;
   #movie = null;
   #changeMovieData = null;
+  #commentsModel = null;
+  #popupPresenter = null;
 
-  constructor (filmsListContainerComponent, changeMovieData) {
+  constructor (filmsListContainerComponent, changeMovieData, movie) {
     this.#filmsListContainerComponent = filmsListContainerComponent;
     this.#changeMovieData = changeMovieData;
+    this.#movie = movie;
   }
 
-  init = (movie) => {
-    this.#movie = movie;
+  init = () => {
     const prevFilmCardComponent = this.#filmCardComponent;
-
-    this.#filmCardComponent = new FilmCardView(movie);
+    this.#filmCardComponent = new FilmCardView(this.#movie);
 
     this.#filmCardComponent.element.querySelector('.film-card__link').addEventListener('click', () => {
-      this.#showPopup(movie);
+      this.#showPopup(this.#movie);
       document.addEventListener('keydown', this.#onEscKeyDown);
       document.querySelector('.film-details__close-btn').addEventListener('click', () => {
         this.#hidePopup();
@@ -60,7 +63,6 @@ export default class FilmPresenter {
   };
 
   #onWishListClick = () => {
-    // this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, wishlist: !this.#movie.user_details.wishlist}});
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
       UpdateType.PATCH,
@@ -69,7 +71,6 @@ export default class FilmPresenter {
   };
 
   #onWatchedClick = () => {
-    // this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}});
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
       UpdateType.PATCH,
@@ -78,7 +79,6 @@ export default class FilmPresenter {
   };
 
   #onFavouriteClick = () => {
-    // this.#changeMovieData({...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}});
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
       UpdateType.PATCH,
@@ -88,16 +88,17 @@ export default class FilmPresenter {
 
 
   #showPopup = (movie) => {
-    const commentsModel = new CommentsModel();
-    const popupPresenter = new PopupPresenter(
+    this.#commentsModel = new CommentsModel(new CommentsApiService(END_POINT, AUTORIZATION), movie);
+    this.#popupPresenter = new PopupPresenter(
       footerElement,
       movie,
-      commentsModel,
+      this.#commentsModel,
       this.#onWishListClick,
       this.#onWatchedClick,
       this.#onFavouriteClick);
     this.#hidePopup();
-    popupPresenter.init();
+    this.#popupPresenter.init();
+    this.#commentsModel.init();
     siteBodyElement.classList.add('hide-overflow');
   };
 

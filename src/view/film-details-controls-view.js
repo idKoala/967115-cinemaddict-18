@@ -27,8 +27,6 @@ export default class FilmDetailsControlsView extends AbstractStatefulView {
 
   constructor (movie) {
     super();
-    // const userDetails = movie.user_details;
-    // this.#userDetails = userDetails;
     this._state = movie.user_details;
     this.#setInnerHandlers();
 

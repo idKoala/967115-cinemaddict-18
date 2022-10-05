@@ -1,6 +1,8 @@
 import {getYearFromDate, convertMinutesToHoursMinutes} from '../utils.js';
 import AbstractView from '../framework/view/abstract-view.js';
 
+const MAX_DESCRIPTION_LENGTH = 140;
+
 const createFilmCardTemplate = (movie) =>
 { const {
   totalRating,
@@ -12,6 +14,8 @@ const createFilmCardTemplate = (movie) =>
   release} = movie.film_info;
 const {comments} = movie;
 const {wishlist, alreadyWatched, favorite} = movie.user_details;
+
+const shortDescription = description <= MAX_DESCRIPTION_LENGTH ? description : description.slice(0, MAX_DESCRIPTION_LENGTH).concat('...');
 
 const wishlistClassName = wishlist
   ? 'film-card__controls-item--active'
@@ -35,7 +39,7 @@ return `<article class="film-card">
     <span class="film-card__genre">${genre.join(', ')}</span>
     </p>
     <img src=${poster} alt="" class="film-card__poster">
-    <p class="film-card__description">${description}</p>
+    <p class="film-card__description">${shortDescription}</p>
     <span class="film-card__comments">${comments.length} comments</span>
   </a>
   <div class="film-card__controls">

@@ -46,6 +46,7 @@ const createFilmDetailsNewCommentTemplate = (data) => {
         </form>`;};
 
 export default class FilmDetailsNewCommentView extends AbstractStatefulView{
+  #keys = new Set();
 
   get template () {
     return createFilmDetailsNewCommentTemplate(this._state);
@@ -83,15 +84,22 @@ export default class FilmDetailsNewCommentView extends AbstractStatefulView{
   };
 
   #onFormSubmit = (evt) => {
-    evt.preventDefault();
-    if (evt.key === 'Enter') {
+    this.#keys[evt.key] = true;
+    console.log(evt.key);
+    if (this.#keys['Meta'] && this.#keys['Enter']) {
       this._callback.formSubmit(this.#stateToLocalComment());
+      console.log('bingo');
     }
   };
 
+  #onFormSubmitSupport = (evt) => {
+    delete this.#keys[evt.key];
+  }
+
   setOnFormSubmit = (callback) => {
     this._callback.formSubmit = callback;
-    this.element.querySelector('.film-details__comment-input').addEventListener('keyup', this.#onFormSubmit);
+    this.element.addEventListener('keydown', this.#onFormSubmit);
+    this.element.addEventListener('keyup', this.#onFormSubmitSupport);
   };
 
   #stateToLocalComment = () => {

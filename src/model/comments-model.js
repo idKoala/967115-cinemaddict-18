@@ -49,7 +49,6 @@ export default class CommentsModel extends Observable {
         ...this.#comments.slice(0, index),
         ...this.#comments.slice(index + 1)
       ];
-      console.log('comments after delete', this.#comments);
       this._notify(updateType, update);
     } catch(err) {
       throw new Error('Can\'t delete comment');

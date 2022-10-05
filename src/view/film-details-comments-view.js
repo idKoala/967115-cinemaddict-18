@@ -8,9 +8,8 @@ const createFilmDetailsCommentsTemplate = (comments) => `
 export default class FilmDetailsCommentsView extends AbstractView {
   #comments = null;
 
-  constructor (movie) {
+  constructor (comments) {
     super();
-    const {comments} = movie;
     this.#comments = comments;
   }
 

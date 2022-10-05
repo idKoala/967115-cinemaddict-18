@@ -65,7 +65,9 @@ export default class PopupPresenter {
         this.#renderComments();
         break;
       case UpdateType.COMMENT_DELETE:
-        console.log('comment is deletes', data.id);
+        console.log('comment is deleted', data.id);
+        this.#clearFilmDetailsComments();
+        this.#renderFilmDetailsComments();
         break;
     }
   };
@@ -78,14 +80,6 @@ export default class PopupPresenter {
       comment
     )
   }
-
-  // #handleCommentModelEvent = (updateType, data) => {
-  //   switch (updateType) {
-  //     case UpdateType.COMMENT_DELETE:
-  //       // перерисовать комментарии
-  //       break;
-  //   }
-  // }
 
   #renderPopup = () => {
     render(this.#popupComponent, this.#popupContainer, RenderPosition.AFTEREND);
@@ -140,9 +134,9 @@ export default class PopupPresenter {
 
   #renderFilmDetailsComments = () => {
     const comments = this.#commentsModel.comments;
-    this.#filmDetailsCommentsComponent = new FilmDetailsCommentsView(this.#popupMovie);
-    render(this.#filmDetailsCommentsComponent, this.#filmDetailsBottomComponent.element);
-    render(this.#filmDetailsCommentsListComponent, this.#filmDetailsBottomComponent.element);
+    this.#filmDetailsCommentsComponent = new FilmDetailsCommentsView(comments);
+    render(this.#filmDetailsCommentsListComponent, this.#filmDetailsBottomComponent.element, RenderPosition.AFTERBEGIN);
+    render(this.#filmDetailsCommentsComponent, this.#filmDetailsBottomComponent.element, RenderPosition.AFTERBEGIN);
 
     comments.forEach((comment) => {
       this.#renderFilmDetailsComment(comment);

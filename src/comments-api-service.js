@@ -36,8 +36,6 @@ export default class CommentsApiService extends ApiService {
       method: Method.DELETE,
     });
 
-    // const parsedResponse = await ApiService.parseResponse(response);
-
     return response;
   };
 }

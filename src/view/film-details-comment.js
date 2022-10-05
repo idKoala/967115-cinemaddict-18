@@ -4,7 +4,6 @@ import {getDateTimeFromDate} from '../utils.js';
 
 const createFilmDetailsCommentTemplate = (userComment) => {
   const {author, comment, date, emotion, isDeleting, isDisabled} = userComment;
-  console.log('userComment ', userComment);
 
   return `
     <li class="film-details__comment">
@@ -40,21 +39,21 @@ export default class FilmDetailsCommentView extends AbstractStatefulView {
     this.element
       .querySelector('.film-details__comment-delete')
       .addEventListener('click', this.#onDeleteClick);
-  }
+  };
 
   #onDeleteClick = (evt) => {
     evt.preventDefault();
     this._callback.deleteClick(this.#comment);
-  }
+  };
 
   static parseCommentToState = (comment) => ({
     ...comment,
     isDisabled: false,
     isDeleting: false
-  })
+  });
 
   _restoreHandlers = () => {
     this.senOnDeleteClick(this._callback.deleteClick);
-  }
+  };
 
 }

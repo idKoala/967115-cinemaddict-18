@@ -57,7 +57,6 @@ export default class FilmCardView extends AbstractView {
     return createFilmCardTemplate(this.#movie);
   }
 
-  // Тут самое место для замыкания -- коллбэки по сути одинаковые
   setOnWishListClick = (callback) => {
     this._callback.wishListClick = callback;
     this.element

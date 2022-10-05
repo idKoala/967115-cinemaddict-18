@@ -23,7 +23,6 @@ export default class PopupPresenter {
   #popupContainer = null;
   #popupMovie = null;
   #commentsModel = null;
-  #comments = null;
   #onWishListClick = null;
   #onWatchedClick = null;
   #onFavouriteClick = null;
@@ -66,12 +65,10 @@ export default class PopupPresenter {
         this.#renderComments();
         break;
       case UpdateType.COMMENT_DELETE:
-        console.log('comment is deleted', data.id);
         this.#clearFilmDetailsComments();
         this.#renderFilmDetailsComments();
         break;
       case UpdateType.COMMENT_ADD:
-        console.log('comment is added');
         this.#clearFilmDetailsComments();
         remove(this.#filmDetailsNewCommentComponent);
         this.#renderFilmDetailsComments();
@@ -81,13 +78,12 @@ export default class PopupPresenter {
   };
 
   #handleDeleteClick = (comment) => {
-    console.log('click', comment.id);
     this.#changeCommentData (
       UserAction.DELETE_COMMENT,
       UpdateType.COMMENT_DELETE,
       comment
-    )
-  }
+    );
+  };
 
   #renderPopup = () => {
     render(this.#popupComponent, this.#popupContainer, RenderPosition.AFTEREND);
@@ -133,12 +129,11 @@ export default class PopupPresenter {
 
   };
 
-  // В комментарий еще нужно передать обработчик на кнопку удаления
   #renderFilmDetailsComment = (comment) => {
     const filmDetailsCommentView = new FilmDetailsCommentView(comment);
     filmDetailsCommentView.senOnDeleteClick(this.#handleDeleteClick);
     render(filmDetailsCommentView, this.#filmDetailsCommentsListComponent.element);
-    this.#commentsSet.set(comment.id, filmDetailsCommentView); // чтобы обрабатывать ошибки при удалении
+    this.#commentsSet.set(comment.id, filmDetailsCommentView);
   };
 
   #renderFilmDetailsComments = () => {
@@ -162,7 +157,7 @@ export default class PopupPresenter {
       UserAction.ADD_COMMENT,
       UpdateType.COMMENT_ADD,
       localComment
-    )
+    );
   };
 
   setDeleting = (comment) => {
@@ -170,24 +165,22 @@ export default class PopupPresenter {
       isDisabled: true,
       isDeleting: true
     });
-  }
+  };
 
-  // адаптировать для нового комментария
   setSaving = () => {
     this.#filmDetailsNewCommentComponent.updateElement({
       isDisabled: true
     });
-  }
+  };
 
   setSavingAborting = (comment) => {
     const resetCommentState = () => {
       this.#filmDetailsNewCommentComponent.updateElement({
         isDisabled: false
       });
-    }
-    console.log('трясись!!');
+    };
     this.#filmDetailsNewCommentComponent.shake(resetCommentState);
-  }
+  };
 
   setAborting = (comment) => {
     const resetCommentState = () => {
@@ -195,10 +188,10 @@ export default class PopupPresenter {
         isDisabled: false,
         isDeleting: false
       });
-    }
+    };
 
     this.#commentsSet.get(comment.id).shake(resetCommentState);
-  }
+  };
 
   #renderFilmDetailsNewComment = () => {
 

@@ -2,15 +2,6 @@ import AbstractView from '../framework/view/abstract-view.js';
 
 const createMenuItemTemplate = (filter, currentFilterType) => {
   const {type, name, count} = filter;
-  if (type === 'all') {
-    return `<a 
-      href="#${type}" 
-      class="main-navigation__item ${
-  type === currentFilterType ? 'main-navigation__item--active' : ''
-}" data-filter-type='${type}'>
-      ${name} 
-      </a>`;
-  }
   return `
   <a 
     href="#${type}" 
@@ -18,12 +9,19 @@ const createMenuItemTemplate = (filter, currentFilterType) => {
   type === currentFilterType ? 'main-navigation__item--active' : ''
 }" data-filter-type='${type}'>
     ${name} 
-    <span 
-      class="main-navigation__item-count">
-      ${count}
-    </span>
-    </a>`;
+    ${type === 'all' ? '' : `<span 
+    class="main-navigation__item-count">
+    ${count}
+  </span>
+  </a>`}
+    
+  `;
 };
+{/* <span
+class="main-navigation__item-count">
+${count}
+</span>
+</a> */}
 
 const createMenuTemplate = (filterItems, currentFilterType) => {
   const filterItemsTemplate = filterItems.reduce((previousValue, currentValue) => previousValue + createMenuItemTemplate(currentValue, currentFilterType), '');

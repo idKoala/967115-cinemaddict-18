@@ -36,7 +36,7 @@ export default class CommentsModel extends Observable {
     } catch(err) {
       throw new Error('Can\'t add comment');
     }
-    
+
   };
 
   deleteComment = async (updateType, update) => {

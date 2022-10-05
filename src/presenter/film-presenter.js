@@ -13,19 +13,19 @@ export default class FilmPresenter {
   #filmCardComponent = null;
   #filmsListContainerComponent = null;
   #movie = null;
-  #movieModel = null
+  #movieModel = null;
   #changeMovieData = null;
   #commentsModel = null;
   #popupPresenter = null;
 
-  constructor (filmsListContainerComponent, changeMovieData, movie, movieModel) {
+  constructor (filmsListContainerComponent, changeMovieData, movieModel) {
     this.#filmsListContainerComponent = filmsListContainerComponent;
     this.#changeMovieData = changeMovieData;
-    this.#movie = movie;
     this.#movieModel = movieModel;
   }
 
-  init = () => {
+  init = (movie) => {
+    this.#movie = movie;
     const prevFilmCardComponent = this.#filmCardComponent;
     this.#filmCardComponent = new FilmCardView(this.#movie);
 
@@ -67,7 +67,7 @@ export default class FilmPresenter {
   #onWishListClick = () => {
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
-      UpdateType.MINOR,
+      UpdateType.PATCH,
       {...this.#movie, user_details: {...this.#movie.user_details, wishlist: !this.#movie.user_details.wishlist}}
     );
   };
@@ -75,7 +75,7 @@ export default class FilmPresenter {
   #onWatchedClick = () => {
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
-      UpdateType.MINOR,
+      UpdateType.PATCH,
       {...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}}
     );
   };
@@ -83,7 +83,7 @@ export default class FilmPresenter {
   #onFavouriteClick = () => {
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
-      UpdateType.MINOR,
+      UpdateType.PATCH,
       {...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}}
     );
   };
@@ -98,7 +98,7 @@ export default class FilmPresenter {
           this.#popupPresenter.setAborting(update);
         }
 
-        
+
         const index = this.#movie.comments.indexOf(update.id);
         this.#movie.comments = [
           ...this.#movie.comments.slice(0, index),
@@ -110,10 +110,10 @@ export default class FilmPresenter {
         this.#popupPresenter.setSaving();
         try {
           await this.
-          #commentsModel.
-          addComment(updateType, update, this.#movie).
-          then((movie) => this.#movieModel.convertToClientFormat(movie)).
-          then((movie) => this.#movieModel.updateMovie(updateType, movie));;
+            #commentsModel.
+            addComment(updateType, update, this.#movie).
+            then((movie) => this.#movieModel.convertToClientFormat(movie)).
+            then((movie) => this.#movieModel.updateMovie(updateType, movie));
         } catch(err) {
           this.#popupPresenter.setSavingAborting();
         }

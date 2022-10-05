@@ -24,10 +24,10 @@ export default class MoviesModel extends Observable {
     }
 
     this._notify(UpdateType.INIT);
-  }
+  };
 
   updateMovie = async (updateType, update) => {
-    
+
     const index = this.#movies.findIndex((movie) => movie.id === update.id);
 
     if (index === -1) {
@@ -46,7 +46,7 @@ export default class MoviesModel extends Observable {
     } catch(err) {
       throw new Error('Can\'t update movie');
     }
-  }
+  };
 
   convertToClientFormat = (movie) => this.#adoptToClient(movie);
 
@@ -71,5 +71,5 @@ export default class MoviesModel extends Observable {
     delete adoptedMovie['film_info']['total_rating'];
 
     return adoptedMovie;
-  }
+  };
 }

@@ -92,11 +92,11 @@ export default class BoardPresenter {
 
     this.#renderFilmsCounter();
   };
-  
+
   #renderFilmsCounter = () => {
     this.#filmCounterComponent = new FilmsCounterView(this.movies);
     render(this.#filmCounterComponent, this.#counterContainer);
-  }
+  };
 
   #renderSort = () => {
     this.#sortContainer = new SortView(this.#currentSortType);
@@ -141,7 +141,6 @@ export default class BoardPresenter {
   };
 
   #handleViewAction = (actionType, updateType, update) => {
-    console.log('update', update);
     switch (actionType) {
       case UserAction.UPDATE_MOVIE:
         this.#moviesModel.updateMovie(updateType, update);
@@ -164,17 +163,14 @@ export default class BoardPresenter {
         break;
       case UpdateType.INIT:
         this.#isLoading = false;
-        // remove(this.#loadingComponent);
         this.#clearFilms();
         this.#renderBoard();
         break;
       case UpdateType.COMMENT_ADD:
-        this.#clearFilms();
-        this.#renderBoard();
+        this.#filmPresenter.get(data.id).init(data);
         break;
       case UpdateType.COMMENT_DELETE:
-        this.#clearFilms();
-        this.#renderBoard();
+        this.#filmPresenter.get(data.id).init(data);
         break;
     }
   };
@@ -207,10 +203,9 @@ export default class BoardPresenter {
   };
 
 
-
   #renderFilmCard = (movie) => {
-    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent.element, this.#handleViewAction, movie, this.#moviesModel);
-    filmPresenter.init();
+    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent.element, this.#handleViewAction, this.#moviesModel);
+    filmPresenter.init(movie);
     this.#filmPresenter.set(movie.id, filmPresenter);
   };
 }

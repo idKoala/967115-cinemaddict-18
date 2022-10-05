@@ -6,7 +6,7 @@ const BLANK_COMMENT = {
   'date': null,
   'emotion': null,
 
-}
+};
 
 const createEmojiImageTemplate = (emoji) => emoji === null ? '' : `<img src="images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">`;
 const createCommentTextTemplate = (text) => text === null ? '' : text;
@@ -55,7 +55,7 @@ export default class FilmDetailsNewCommentView extends AbstractStatefulView{
     super();
     this._state = FilmDetailsNewCommentView.parseCommentToState(comment);
     this.#setInnerHandlers();
-    
+
   }
 
   static parseCommentToState = (comment) => ({...comment,
@@ -101,8 +101,7 @@ export default class FilmDetailsNewCommentView extends AbstractStatefulView{
     };
 
     return lc;
-  }
-
+  };
 
 
   _restoreHandlers = () => {

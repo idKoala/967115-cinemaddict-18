@@ -7,6 +7,7 @@ import FilmPresenter from './film-presenter.js';
 import FilmsListTitleView from '../view/films-list-title-view.js';
 import LoadingView from '../view/loading-view.js';
 import SortView from '../view/sort-view.js';
+import FilmsCounterView from '../view/films-counter-view.js';
 import {sortMoviesRating, sortMovieDate} from '../utils.js';
 import {Filter} from '../utils.js';
 import {SortType, UpdateType, UserAction, FilterType} from '../const.js';
@@ -23,6 +24,7 @@ export default class BoardPresenter {
   #renderedMoviesCount = MOVIES_COUNT_PER_STEP;
   #sortContainer = null;
   #boardContainer = null;
+  #counterContainer = null;
   #moviesModel = null;
   #filterModel = null;
   #currentSortType = SortType.DEFAULT;
@@ -30,8 +32,9 @@ export default class BoardPresenter {
   #filterType = FilterType.ALL;
   #isLoading = true;
 
-  constructor (boardContainer, moviesModel, filterModel) {
+  constructor (boardContainer, counterContainer, moviesModel, filterModel) {
     this.#boardContainer = boardContainer;
+    this.#counterContainer = counterContainer;
     this.#moviesModel = moviesModel;
     this.#filterModel = filterModel;
 
@@ -85,6 +88,8 @@ export default class BoardPresenter {
     }
 
     this.#renderFilmsList();
+
+    render(new FilmsCounterView(this.movies), this.#counterContainer);
   };
 
   #renderSort = () => {

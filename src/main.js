@@ -13,11 +13,11 @@ const footerElement = document.querySelector('.footer');
 
 const moviesModel = new MoviesModel(new MoviesApiService(END_POINT, AUTORIZATION));
 const filterModel = new FilterModel();
-const filterPresenter = new FilterPresenter(siteMainElement, filterModel, moviesModel);
+const filterPresenter = new FilterPresenter(siteMainElement, profileElement, filterModel, moviesModel);
 const boardPresenter = new BoardPresenter(siteMainElement, footerElement, moviesModel, filterModel);
 
-render(new UserRatingView(), profileElement);
 
 filterPresenter.init();
 boardPresenter.init();
 moviesModel.init();
+// render(new UserRatingView(moviesModel), profileElement);

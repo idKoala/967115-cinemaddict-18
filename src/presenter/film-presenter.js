@@ -111,9 +111,9 @@ export default class FilmPresenter {
         try {
           await this.
             #commentsModel.
-            addComment(updateType, update, this.#movie).
-            then((movie) => this.#movieModel.convertToClientFormat(movie)).
-            then((movie) => this.#movieModel.updateMovie(updateType, movie));
+            addComment(updateType, update, this.#movie)
+            .then((movie) => this.#movieModel.convertToClientFormat(movie))
+            .then((movie) => this.#movieModel.updateMovie(updateType, movie));
         } catch(err) {
           this.#popupPresenter.setSavingAborting();
         }

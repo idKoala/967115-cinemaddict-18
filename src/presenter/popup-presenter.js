@@ -23,6 +23,7 @@ export default class PopupPresenter {
   #popupContainer = null;
   #popupMovie = null;
   #commentsModel = null;
+  #comments = null;
   #onWishListClick = null;
   #onWatchedClick = null;
   #onFavouriteClick = null;

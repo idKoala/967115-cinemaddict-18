@@ -1,8 +1,10 @@
 import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import {getDateTimeFromDate} from '../utils.js';
 
 const createFilmDetailsCommentTemplate = (userComment) => {
-  const {author, comment, date, emotion} = userComment;
+  const {author, comment, date, emotion, isDeleting, isDisabled} = userComment;
+  console.log('userComment ', userComment);
 
   return `
     <li class="film-details__comment">
@@ -14,25 +16,25 @@ const createFilmDetailsCommentTemplate = (userComment) => {
     <p class="film-details__comment-info">
         <span class="film-details__comment-author">${author}</span>
         <span class="film-details__comment-day">${getDateTimeFromDate(date)}</span>
-        <button class="film-details__comment-delete">Delete</button>
+        <button class="film-details__comment-delete" ${isDisabled ? 'disabled' : ''}>${isDeleting ? 'Deleting...' : 'Delete'}</button>
     </p>
     </div>
     </li>   
 `;};
 
-export default class FilmDetailsCommentView extends AbstractView {
+export default class FilmDetailsCommentView extends AbstractStatefulView {
   #comment = null;
 
   constructor (comment) {
     super();
     this.#comment = comment;
+    this._state = FilmDetailsCommentView.parseCommentToState(comment);
   }
 
   get template () {
-    return createFilmDetailsCommentTemplate(this.#comment);
+    return createFilmDetailsCommentTemplate(this._state);
   }
 
-  //метод set...
   senOnDeleteClick = (callback) => {
     this._callback.deleteClick = callback;
     this.element
@@ -45,5 +47,14 @@ export default class FilmDetailsCommentView extends AbstractView {
     this._callback.deleteClick(this.#comment);
   }
 
+  static parseCommentToState = (comment) => ({
+    ...comment,
+    isDisabled: false,
+    isDeleting: false
+  })
+
+  _restoreHandlers = () => {
+    this.senOnDeleteClick(this._callback.deleteClick);
+  }
 
 }

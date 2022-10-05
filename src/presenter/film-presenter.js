@@ -88,10 +88,17 @@ export default class FilmPresenter {
     );
   };
 
-  #handleViewAction = (actionType, updateType, update) => {
+  #handleViewAction = async (actionType, updateType, update) => {
     switch (actionType) {
       case UserAction.DELETE_COMMENT:
-        this.#commentsModel.deleteComment(updateType, update);
+        this.#popupPresenter.setDeleting(update);
+        try {
+          await this.#commentsModel.deleteComment(updateType, update);
+        } catch(err) {
+          this.#popupPresenter.setAborting(update);
+        }
+
+        
         const index = this.#movie.comments.indexOf(update.id);
         this.#movie.comments = [
           ...this.#movie.comments.slice(0, index),

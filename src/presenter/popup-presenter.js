@@ -32,6 +32,7 @@ export default class PopupPresenter {
   #filmDetailsNewCommentComponent = null;
   #filmDetailsCommentsComponent = null;
   #isLoading = true;
+  #commentsSet = new Map();
 
   constructor (
     popupContainer,
@@ -137,6 +138,7 @@ export default class PopupPresenter {
     const filmDetailsCommentView = new FilmDetailsCommentView(comment);
     filmDetailsCommentView.senOnDeleteClick(this.#handleDeleteClick);
     render(filmDetailsCommentView, this.#filmDetailsCommentsListComponent.element);
+    this.#commentsSet.set(comment.id, filmDetailsCommentView); // чтобы обрабатывать ошибки при удалении
   };
 
   #renderFilmDetailsComments = () => {
@@ -162,6 +164,24 @@ export default class PopupPresenter {
       localComment
     )
   };
+
+  setDeleting = (comment) => {
+    this.#commentsSet.get(comment.id).updateElement({
+      isDisabled: true,
+      isDeleting: true
+    });
+  }
+
+  setAborting = (comment) => {
+    const resetCommentState = () => {
+      this.#commentsSet.get(comment.id).updateElement({
+        isDisabled: false,
+        isDeleting: false
+      });
+    }
+
+    this.#commentsSet.get(comment.id).shake(resetCommentState);
+  }
 
   #renderFilmDetailsNewComment = () => {
 

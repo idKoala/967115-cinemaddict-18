@@ -199,6 +199,8 @@ export default class BoardPresenter {
     this.#renderBoard();
   };
 
+
+
   #renderFilmCard = (movie) => {
     const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent.element, this.#handleViewAction, movie, this.#moviesModel);
     filmPresenter.init();

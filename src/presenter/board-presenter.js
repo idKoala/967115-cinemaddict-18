@@ -162,6 +162,14 @@ export default class BoardPresenter {
         this.#clearFilms();
         this.#renderBoard();
         break;
+      case UpdateType.COMMENT_ADD:
+        this.#clearFilms();
+        this.#renderBoard();
+        break;
+      case UpdateType.COMMENT_DELETE:
+        this.#clearFilms();
+        this.#renderBoard();
+        break;
     }
   };
 
@@ -192,7 +200,7 @@ export default class BoardPresenter {
   };
 
   #renderFilmCard = (movie) => {
-    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent.element, this.#handleViewAction, movie);
+    const filmPresenter = new FilmPresenter(this.#filmsListContainerComponent.element, this.#handleViewAction, movie, this.#moviesModel);
     filmPresenter.init();
     this.#filmPresenter.set(movie.id, filmPresenter);
   };

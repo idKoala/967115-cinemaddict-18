@@ -69,6 +69,13 @@ export default class PopupPresenter {
         this.#clearFilmDetailsComments();
         this.#renderFilmDetailsComments();
         break;
+      case UpdateType.COMMENT_ADD:
+        console.log('comment is added');
+        this.#clearFilmDetailsComments();
+        remove(this.#filmDetailsNewCommentComponent);
+        this.#renderFilmDetailsComments();
+        this.#renderFilmDetailsNewComment();
+        break;
     }
   };
 
@@ -148,13 +155,18 @@ export default class PopupPresenter {
     remove(this.#filmDetailsCommentsListComponent);
   };
 
-  #handleFormSubmit = () => {
-    //Заготовка на отправку формы
+  #handleFormSubmit = (localComment) => {
+    this.#changeCommentData (
+      UserAction.ADD_COMMENT,
+      UpdateType.COMMENT_ADD,
+      localComment
+    )
   };
 
   #renderFilmDetailsNewComment = () => {
 
     this.#filmDetailsNewCommentComponent = new FilmDetailsNewCommentView();
+    this.#filmDetailsNewCommentComponent.setOnFormSubmit(this.#handleFormSubmit);
     render(this.#filmDetailsNewCommentComponent, this.#filmDetailsBottomComponent.element);
   };
 

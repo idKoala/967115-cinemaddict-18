@@ -13,7 +13,8 @@ const FilterType = {
 
 const UserAction = {
   UPDATE_MOVIE: 'UPDATE_MOVIE',
-  DELETE_COMMENT: 'DELETE_COMMENT'
+  DELETE_COMMENT: 'DELETE_COMMENT',
+  ADD_COMMENT: 'ADD_COMMENT'
 };
 
 const UpdateType = {
@@ -22,7 +23,8 @@ const UpdateType = {
   MAJOR: 'MAJOR',
   INIT: 'INIT',
   COMMENTS_INIT: 'COMMENTS_INIT',
-  COMMENT_DELETE: 'COMMENT_DELETE'
+  COMMENT_DELETE: 'COMMENT_DELETE',
+  COMMENT_ADD: 'COMMENT_ADD'
 };
 
 const END_POINT = 'https://18.ecmascript.pages.academy/cinemaddict/';

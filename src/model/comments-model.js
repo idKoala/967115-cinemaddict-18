@@ -26,19 +26,21 @@ export default class CommentsModel extends Observable {
     return this.#comments;
   }
 
-  addComment = (updateType, update) => {
-    this.#comments = [
-      update,
-      ...this.#comments
-    ];
-
-    this._notify(updateType, update);
+  addComment = async (updateType, update, movie) => {
+    try {
+      const response = await this.#commentsApiService.addComment(update, movie);
+      this.#comments = response.comments;
+      const updatedMovie = response.movie;
+      this._notify(updateType, update);
+      return updatedMovie;
+    } catch(err) {
+      throw new Error('Can\'t add comment');
+    }
+    
   };
 
   deleteComment = async (updateType, update) => {
     const index = this.#comments.findIndex((comment) => comment.id === update.id);
-    console.log('model comment update id', update.id);
-    console.log('index', index);
     if (index === -1) {
       throw new Error('Can\'t delete unexisting comment');
     }

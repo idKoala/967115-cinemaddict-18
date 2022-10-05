@@ -48,6 +48,8 @@ export default class MoviesModel extends Observable {
     }
   }
 
+  convertToClientFormat = (movie) => this.#adoptToClient(movie);
+
   #adoptToClient = (movie) => {
     const adoptedMovie = {
       ...movie,

@@ -52,7 +52,7 @@ export default class FilmDetailsNewCommentView extends AbstractStatefulView{
       'emotion': null
     };
     this.#setInnerHandlers();
-
+    
   }
 
   #onEmojiClick = (evt) => {
@@ -66,6 +66,9 @@ export default class FilmDetailsNewCommentView extends AbstractStatefulView{
       .querySelectorAll('[name="comment-emoji"]')
       .forEach((emoji) => emoji.addEventListener('change', this.#onEmojiClick));
     this.element.querySelector('.film-details__comment-label').addEventListener('input', this.#onCommentInput);
+    // this.element
+    // .querySelector('.film-details__comment-input')
+    // .addEventListener('keyup', this.#onFormSubmit);
   };
 
   #onCommentInput = (evt) => {
@@ -77,17 +80,35 @@ export default class FilmDetailsNewCommentView extends AbstractStatefulView{
 
   #onFormSubmit = (evt) => {
     evt.preventDefault();
-    this._callback.formSubmit();
+    if (evt.key === 'Enter') {
+      this._callback.formSubmit(this.#stateToLocalComment());
+    }
   };
 
   setOnFormSubmit = (callback) => {
     this._callback.formSubmit = callback;
-    this.element.querySelector('form').addEventListener('submit', this.#onFormSubmit);
+    this.element.querySelector('.film-details__comment-input').addEventListener('keyup', this.#onFormSubmit);
   };
 
+  #stateToLocalComment = () => {
+    const lc = {
+      comment: this._state.comment,
+      emotion: this._state.emotion
+    };
+
+    return lc;
+  }
+
+  // #onFormSubmit = (evt) => {
+  //   if (evt.key === 'Enter') {
+  //     evt.preventDefault();
+  //     this.element.submit();
+  //     console.log('suuuubmited');
+  //   }
+  // }
 
   _restoreHandlers = () => {
     this.#setInnerHandlers();
-    //this.setOnFormSubmit(this._callback.formSubmit);
+    this.setOnFormSubmit(this._callback.formSubmit);
   };
 }

@@ -13,14 +13,16 @@ export default class FilmPresenter {
   #filmCardComponent = null;
   #filmsListContainerComponent = null;
   #movie = null;
+  #movieModel = null
   #changeMovieData = null;
   #commentsModel = null;
   #popupPresenter = null;
 
-  constructor (filmsListContainerComponent, changeMovieData, movie) {
+  constructor (filmsListContainerComponent, changeMovieData, movie, movieModel) {
     this.#filmsListContainerComponent = filmsListContainerComponent;
     this.#changeMovieData = changeMovieData;
     this.#movie = movie;
+    this.#movieModel = movieModel;
   }
 
   init = () => {
@@ -89,10 +91,21 @@ export default class FilmPresenter {
   #handleViewAction = (actionType, updateType, update) => {
     switch (actionType) {
       case UserAction.DELETE_COMMENT:
-        // this.#moviesModel.updateMovie(updateType, update);
-        // у модели комментариев вызвать метод delete
         this.#commentsModel.deleteComment(updateType, update);
-        console.log('handleViewAction', update.id);
+        const index = this.#movie.comments.indexOf(update.id);
+        this.#movie.comments = [
+          ...this.#movie.comments.slice(0, index),
+          ...this.#movie.comments.slice(index + 1)
+        ];
+        this.#movieModel.updateMovie(updateType, this.#movie);
+        break;
+      case UserAction.ADD_COMMENT:
+          this.
+          #commentsModel.
+          addComment(updateType, update, this.#movie).
+          then((movie) => this.#movieModel.convertToClientFormat(movie)).
+          then((movie) => this.#movieModel.updateMovie(updateType, movie));
+  
         break;
     }
   };

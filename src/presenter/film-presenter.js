@@ -107,12 +107,16 @@ export default class FilmPresenter {
         this.#movieModel.updateMovie(updateType, this.#movie);
         break;
       case UserAction.ADD_COMMENT:
-          this.
+        this.#popupPresenter.setSaving();
+        try {
+          await this.
           #commentsModel.
           addComment(updateType, update, this.#movie).
           then((movie) => this.#movieModel.convertToClientFormat(movie)).
-          then((movie) => this.#movieModel.updateMovie(updateType, movie));
-  
+          then((movie) => this.#movieModel.updateMovie(updateType, movie));;
+        } catch(err) {
+          this.#popupPresenter.setSavingAborting();
+        }
         break;
     }
   };

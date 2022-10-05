@@ -1,13 +1,21 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
+const BLANK_COMMENT = {
+  'author': null,
+  'comment': null,
+  'date': null,
+  'emotion': null,
+
+}
+
 const createEmojiImageTemplate = (emoji) => emoji === null ? '' : `<img src="images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">`;
 const createCommentTextTemplate = (text) => text === null ? '' : text;
 
 const createFilmDetailsNewCommentTemplate = (data) => {
-  const {emotion, comment} = data;
+  const {emotion, comment, isDisabled} = data;
 
   return `
-<form class="film-details__new-comment" action="" method="get">
+<form class="film-details__new-comment" action="" method="get" ${isDisabled ? 'disabled' : ''}>
           <div class="film-details__add-emoji-label">${createEmojiImageTemplate(emotion)}</div>
 
           <label class="film-details__comment-label">
@@ -43,17 +51,16 @@ export default class FilmDetailsNewCommentView extends AbstractStatefulView{
     return createFilmDetailsNewCommentTemplate(this._state);
   }
 
-  constructor () {
+  constructor (comment = BLANK_COMMENT) {
     super();
-    this._state = {
-      'author': null,
-      'comment': null,
-      'date': null,
-      'emotion': null
-    };
+    this._state = FilmDetailsNewCommentView.parseCommentToState(comment);
     this.#setInnerHandlers();
     
   }
+
+  static parseCommentToState = (comment) => ({...comment,
+    isDisabled: false,
+  });
 
   #onEmojiClick = (evt) => {
     this.updateElement({
@@ -66,9 +73,6 @@ export default class FilmDetailsNewCommentView extends AbstractStatefulView{
       .querySelectorAll('[name="comment-emoji"]')
       .forEach((emoji) => emoji.addEventListener('change', this.#onEmojiClick));
     this.element.querySelector('.film-details__comment-label').addEventListener('input', this.#onCommentInput);
-    // this.element
-    // .querySelector('.film-details__comment-input')
-    // .addEventListener('keyup', this.#onFormSubmit);
   };
 
   #onCommentInput = (evt) => {
@@ -99,13 +103,7 @@ export default class FilmDetailsNewCommentView extends AbstractStatefulView{
     return lc;
   }
 
-  // #onFormSubmit = (evt) => {
-  //   if (evt.key === 'Enter') {
-  //     evt.preventDefault();
-  //     this.element.submit();
-  //     console.log('suuuubmited');
-  //   }
-  // }
+
 
   _restoreHandlers = () => {
     this.#setInnerHandlers();

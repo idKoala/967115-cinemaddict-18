@@ -25,6 +25,7 @@ export default class BoardPresenter {
   #sortContainer = null;
   #boardContainer = null;
   #counterContainer = null;
+  #filmCounterComponent = null;
   #moviesModel = null;
   #filterModel = null;
   #currentSortType = SortType.DEFAULT;
@@ -89,8 +90,13 @@ export default class BoardPresenter {
 
     this.#renderFilmsList();
 
-    render(new FilmsCounterView(this.movies), this.#counterContainer);
+    this.#renderFilmsCounter();
   };
+  
+  #renderFilmsCounter = () => {
+    this.#filmCounterComponent = new FilmsCounterView(this.movies);
+    render(this.#filmCounterComponent, this.#counterContainer);
+  }
 
   #renderSort = () => {
     this.#sortContainer = new SortView(this.#currentSortType);
@@ -180,6 +186,7 @@ export default class BoardPresenter {
     remove(this.#sortContainer);
     remove(this.#showMoreButtonComponent);
     remove(this.#loadingComponent);
+    remove(this.#filmCounterComponent);
 
     if (this.#filmsListTitleComponent) {
       remove(this.#filmsListTitleComponent);

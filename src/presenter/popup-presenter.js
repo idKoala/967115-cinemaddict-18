@@ -172,6 +172,23 @@ export default class PopupPresenter {
     });
   }
 
+  // адаптировать для нового комментария
+  setSaving = () => {
+    this.#filmDetailsNewCommentComponent.updateElement({
+      isDisabled: true
+    });
+  }
+
+  setSavingAborting = (comment) => {
+    const resetCommentState = () => {
+      this.#filmDetailsNewCommentComponent.updateElement({
+        isDisabled: false
+      });
+    }
+    console.log('трясись!!');
+    this.#filmDetailsNewCommentComponent.shake(resetCommentState);
+  }
+
   setAborting = (comment) => {
     const resetCommentState = () => {
       this.#commentsSet.get(comment.id).updateElement({

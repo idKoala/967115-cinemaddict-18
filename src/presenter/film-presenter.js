@@ -67,7 +67,7 @@ export default class FilmPresenter {
   #onWishListClick = () => {
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
-      UpdateType.PATCH,
+      UpdateType.MINOR,
       {...this.#movie, user_details: {...this.#movie.user_details, wishlist: !this.#movie.user_details.wishlist}}
     );
   };
@@ -75,7 +75,7 @@ export default class FilmPresenter {
   #onWatchedClick = () => {
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
-      UpdateType.PATCH,
+      UpdateType.MINOR,
       {...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}}
     );
   };
@@ -83,7 +83,7 @@ export default class FilmPresenter {
   #onFavouriteClick = () => {
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
-      UpdateType.PATCH,
+      UpdateType.MINOR,
       {...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}}
     );
   };

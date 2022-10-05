@@ -65,7 +65,7 @@ export default class FilmPresenter {
   #onWishListClick = () => {
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
-      UpdateType.PATCH,
+      UpdateType.MINOR,
       {...this.#movie, user_details: {...this.#movie.user_details, wishlist: !this.#movie.user_details.wishlist}}
     );
   };
@@ -73,7 +73,7 @@ export default class FilmPresenter {
   #onWatchedClick = () => {
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
-      UpdateType.PATCH,
+      UpdateType.MINOR,
       {...this.#movie, user_details: {...this.#movie.user_details, alreadyWatched: !this.#movie.user_details.alreadyWatched}}
     );
   };
@@ -81,11 +81,21 @@ export default class FilmPresenter {
   #onFavouriteClick = () => {
     this.#changeMovieData(
       UserAction.UPDATE_MOVIE,
-      UpdateType.PATCH,
+      UpdateType.MINOR,
       {...this.#movie, user_details: {...this.#movie.user_details, favorite: !this.#movie.user_details.favorite}}
     );
   };
 
+  #handleViewAction = (actionType, updateType, update) => {
+    switch (actionType) {
+      case UserAction.DELETE_COMMENT:
+        // this.#moviesModel.updateMovie(updateType, update);
+        // у модели комментариев вызвать метод delete
+        this.#commentsModel.deleteComment(updateType, update);
+        console.log('handleViewAction', update.id);
+        break;
+    }
+  };
 
   #showPopup = (movie) => {
     this.#commentsModel = new CommentsModel(new CommentsApiService(END_POINT, AUTORIZATION), movie);
@@ -96,7 +106,8 @@ export default class FilmPresenter {
       this.#commentsModel,
       this.#onWishListClick,
       this.#onWatchedClick,
-      this.#onFavouriteClick);
+      this.#onFavouriteClick,
+      this.#handleViewAction);
     this.#hidePopup();
     this.#popupPresenter.init();
     siteBodyElement.classList.add('hide-overflow');

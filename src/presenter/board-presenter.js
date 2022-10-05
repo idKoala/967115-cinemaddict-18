@@ -130,6 +130,7 @@ export default class BoardPresenter {
   };
 
   #handleViewAction = (actionType, updateType, update) => {
+    console.log('update', update);
     switch (actionType) {
       case UserAction.UPDATE_MOVIE:
         this.#moviesModel.updateMovie(updateType, update);

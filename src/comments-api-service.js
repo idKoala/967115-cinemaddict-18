@@ -9,10 +9,10 @@ const Method = {
 export default class CommentsApiService extends ApiService {
 
   // метод получения всех комментариев не нужен. Будет вызываться следующий по id фильма
-  get comments() {
-    return this._load({url: 'comments'})
-      .then(ApiService.parseResponse);
-  }
+  // get comments() {
+  //   return this._load({url: 'comments'})
+  //     .then(ApiService.parseResponse);
+  // }
 
   getComments = async (movie) => this._load({url: `comments/${movie.id}`})
     .then(ApiService.parseResponse);
@@ -34,11 +34,10 @@ export default class CommentsApiService extends ApiService {
     const response = await this._load({
       url: `comments/${comment.id}`,
       method: Method.DELETE,
-      // нужны ли заголовки с типом, если нет контента
     });
 
-    const parsedResponse = await ApiService.parseResponse(response);
+    // const parsedResponse = await ApiService.parseResponse(response);
 
-    return parsedResponse;
+    return response;
   };
 }

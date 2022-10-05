@@ -27,6 +27,7 @@ export default class PopupPresenter {
   #onWishListClick = null;
   #onWatchedClick = null;
   #onFavouriteClick = null;
+  #changeCommentData = null;
   #filmDetailsControlsComponent = null;
   #filmDetailsNewCommentComponent = null;
   #filmDetailsCommentsComponent = null;
@@ -38,7 +39,8 @@ export default class PopupPresenter {
     commentsModel,
     onWishListClick,
     onWatchedClick,
-    onFavouriteClick)
+    onFavouriteClick,
+    changeCommentData)
   {
     this.#popupContainer = popupContainer;
     this.#popupMovie = movieData;
@@ -46,6 +48,7 @@ export default class PopupPresenter {
     this.#onWishListClick = onWishListClick;
     this.#onWatchedClick = onWatchedClick;
     this.#onFavouriteClick = onFavouriteClick;
+    this.#changeCommentData = changeCommentData;
   }
 
   init () {
@@ -62,9 +65,27 @@ export default class PopupPresenter {
         this.#renderComments();
         break;
       case UpdateType.COMMENT_DELETE:
+        console.log('comment is deletes', data.id);
         break;
     }
   };
+
+  #handleDeleteClick = (comment) => {
+    console.log('click', comment.id);
+    this.#changeCommentData (
+      UserAction.DELETE_COMMENT,
+      UpdateType.COMMENT_DELETE,
+      comment
+    )
+  }
+
+  // #handleCommentModelEvent = (updateType, data) => {
+  //   switch (updateType) {
+  //     case UpdateType.COMMENT_DELETE:
+  //       // перерисовать комментарии
+  //       break;
+  //   }
+  // }
 
   #renderPopup = () => {
     render(this.#popupComponent, this.#popupContainer, RenderPosition.AFTEREND);
@@ -75,9 +96,6 @@ export default class PopupPresenter {
     this.#renderFilmDetailsCloseButton();
     this.#renderFilmDetailsInfo();
     this.#renderFilmDetailsControls();
-
-    // this.#renderFilmDetailsComments();
-    // this.#renderFilmDetailsNewComment();
 
   };
 
@@ -115,7 +133,9 @@ export default class PopupPresenter {
 
   // В комментарий еще нужно передать обработчик на кнопку удаления
   #renderFilmDetailsComment = (comment) => {
-    render(new FilmDetailsCommentView(comment), this.#filmDetailsCommentsListComponent.element);
+    const filmDetailsCommentView = new FilmDetailsCommentView(comment);
+    filmDetailsCommentView.senOnDeleteClick(this.#handleDeleteClick);
+    render(filmDetailsCommentView, this.#filmDetailsCommentsListComponent.element);
   };
 
   #renderFilmDetailsComments = () => {
